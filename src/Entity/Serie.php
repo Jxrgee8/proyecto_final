@@ -31,13 +31,13 @@ class Serie
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $genero = [];
 
-    #[ORM\ManyToMany(targetEntity: Lista::class, mappedBy: 'series_viendo')]
-    private Collection $listas;
+    #[ORM\ManyToOne(inversedBy: 'series')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Lista $Lista = null;
 
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
-        $this->listas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,31 +123,16 @@ class Serie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Lista>
-     */
-    public function getListas(): Collection
+    public function getLista(): ?Lista
     {
-        return $this->listas;
+    return $this->Lista;
     }
 
-    public function addLista(Lista $lista): static
+    public function setLista(?Lista $Lista): static
     {
-        if (!$this->listas->contains($lista)) {
-            $this->listas->add($lista);
-            $lista->addSeriesViendo($this);
-        }
+    $this->Lista = $Lista;
 
-        return $this;
-    }
-
-    public function removeLista(Lista $lista): static
-    {
-        if ($this->listas->removeElement($lista)) {
-            $lista->removeSeriesViendo($this);
-        }
-
-        return $this;
+    return $this;
     }
 
 }

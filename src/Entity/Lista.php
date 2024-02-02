@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ListaRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,96 +14,42 @@ class Lista
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'listas')]
-    private Collection $series_viendo;
-
-    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'listas')]
-    private Collection $series_por_ver;
-
-    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'listas')]
-    private Collection $series_vistas;
-
-    public function __construct()
-    {
-        $this->series_viendo = new ArrayCollection();
-        $this->series_por_ver = new ArrayCollection();
-        $this->series_vistas = new ArrayCollection();
-    }
+    #[ORM\OneToMany(mappedBy: 'Lista', targetEntity: Serie::class)]
+    private Collection $series;
 
     public function getId(): ?int
     {
         return $this->id;
+        return $this->series;
     }
 
     /**
-     * @return Collection<int, Serie>
-     */
-    public function getSeriesViendo(): Collection
+    * @return Collection<int, Serie>
+    */
+    public function getSeries(): Collection
     {
-        return $this->series_viendo;
+    return $this->series;
     }
 
-    public function addSeriesViendo(Serie $seriesViendo): static
+    public function addSeries(Serie $series): static
     {
-        if (!$this->series_viendo->contains($seriesViendo)) {
-            $this->series_viendo->add($seriesViendo);
+    if (!$this->series->contains($series)) {
+        $this->series->add($series);
+        $series->setLista($this);
+    }
+
+    return $this;
+    }
+
+    public function removeSeries(Serie $series): static
+    {
+    if ($this->series->removeElement($series)) {
+        // set the owning side to null (unless already changed)
+        if ($series->getLista() === $this) {
+            $series->setLista(null);
         }
-
-        return $this;
     }
 
-    public function removeSeriesViendo(Serie $seriesViendo): static
-    {
-        $this->series_viendo->removeElement($seriesViendo);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Serie>
-     */
-    public function getSeriesPorVer(): Collection
-    {
-        return $this->series_por_ver;
-    }
-
-    public function addSeriesPorVer(Serie $seriesPorVer): static
-    {
-        if (!$this->series_por_ver->contains($seriesPorVer)) {
-            $this->series_por_ver->add($seriesPorVer);
-        }
-
-        return $this;
-    }
-
-    public function removeSeriesPorVer(Serie $seriesPorVer): static
-    {
-        $this->series_por_ver->removeElement($seriesPorVer);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Serie>
-     */
-    public function getSeriesVistas(): Collection
-    {
-        return $this->series_vistas;
-    }
-
-    public function addSeriesVista(Serie $seriesVista): static
-    {
-        if (!$this->series_vistas->contains($seriesVista)) {
-            $this->series_vistas->add($seriesVista);
-        }
-
-        return $this;
-    }
-
-    public function removeSeriesVista(Serie $seriesVista): static
-    {
-        $this->series_vistas->removeElement($seriesVista);
-
-        return $this;
+    return $this;
     }
 }
