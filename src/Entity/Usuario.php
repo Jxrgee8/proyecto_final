@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -31,6 +33,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 25)]
     private ?string $username = null;
+
+    #[ORM\OneToMany(mappedBy: 'usuario_id', targetEntity: Lista::class)]
+    private Collection $listas;
+
+    public function __construct()
+    {
+        $this->listas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -93,16 +103,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    public function getUsername(): ?string
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -113,4 +114,44 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Lista>
+     */
+    public function getListas(): Collection
+    {
+        return $this->listas;
+    }
+
+    public function addLista(Lista $lista): static
+    {
+        if (!$this->listas->contains($lista)) {
+            $this->listas->add($lista);
+            $lista->setUsuarioId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLista(Lista $lista): static
+    {
+        if ($this->listas->removeElement($lista)) {
+            // set the owning side to null (unless already changed)
+            if ($lista->getUsuarioId() === $this) {
+                $lista->setUsuarioId(null);
+            }
+        }
+
+        return $this;
+    }
+    
 }

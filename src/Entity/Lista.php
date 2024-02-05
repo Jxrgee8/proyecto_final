@@ -17,6 +17,22 @@ class Lista
     #[ORM\OneToMany(mappedBy: 'Lista', targetEntity: Serie::class)]
     private Collection $series;
 
+    #[ORM\Column(length: 60)]
+    private ?string $tipo_lista = null;
+
+    #[ORM\ManyToOne(inversedBy: 'listas')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Usuario $usuario = null;
+
+    /* //TODO: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+    */
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,5 +67,29 @@ class Lista
     }
 
     return $this;
+    }
+
+    public function getTipoLista(): ?string
+    {
+        return $this->tipo_lista;
+    }
+
+    public function setTipoLista(string $tipo_lista): static
+    {
+        $this->tipo_lista = $tipo_lista;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?Usuario $usuario): static
+    {
+        $this->usuario = $usuario;
+
+        return $this;
     }
 }
