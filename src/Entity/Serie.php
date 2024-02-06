@@ -35,6 +35,9 @@ class Serie
     #[ORM\JoinColumn(nullable: true)]
     private ?Lista $Lista = null;
 
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $sinopsis = null;
+
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
@@ -133,6 +136,18 @@ class Serie
     $this->Lista = $Lista;
 
     return $this;
+    }
+
+    public function getSinopsis(): ?string
+    {
+        return $this->sinopsis;
+    }
+
+    public function setSinopsis(?string $sinopsis): static
+    {
+        $this->sinopsis = $sinopsis;
+
+        return $this;
     }
 
 }

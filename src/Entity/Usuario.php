@@ -19,7 +19,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(length: 80 , unique: true)]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -31,7 +31,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 20, unique: true)]
     private ?string $username = null;
 
     #[ORM\OneToMany(mappedBy: 'usuario_id', targetEntity: Lista::class)]
@@ -130,28 +130,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function getListas(): Collection
     {
         return $this->listas;
-    }
-
-    public function addLista(Lista $lista): static
-    {
-        if (!$this->listas->contains($lista)) {
-            $this->listas->add($lista);
-            $lista->setUsuarioId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLista(Lista $lista): static
-    {
-        if ($this->listas->removeElement($lista)) {
-            // set the owning side to null (unless already changed)
-            if ($lista->getUsuarioId() === $this) {
-                $lista->setUsuarioId(null);
-            }
-        }
-
-        return $this;
     }
     
 }

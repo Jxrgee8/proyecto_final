@@ -22,12 +22,12 @@ class Temporada
     #[ORM\JoinColumn(nullable: false)]
     private ?Serie $Serie = null;
 
-    #[ORM\OneToMany(mappedBy: 'Temporada', targetEntity: Capitulos::class)]
-    private Collection $capitulos;
+    #[ORM\OneToMany(mappedBy: 'Temporada', targetEntity: Capitulo::class)]
+    private Collection $capitulo;
 
     public function __construct()
     {
-        $this->capitulos = new ArrayCollection();
+        $this->capitulo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,24 +62,24 @@ class Temporada
     /**
      * @return Collection<int, Capitulos>
      */
-    public function getCapitulos(): Collection
+    public function getCapitulo(): Collection
     {
-        return $this->capitulos;
+        return $this->capitulo;
     }
 
-    public function addCapitulo(Capitulos $capitulo): static
+    public function addCapitulo(Capitulo $capitulo): static
     {
-        if (!$this->capitulos->contains($capitulo)) {
-            $this->capitulos->add($capitulo);
+        if (!$this->capitulo->contains($capitulo)) {
+            $this->capitulo->add($capitulo);
             $capitulo->setTemporada($this);
         }
 
         return $this;
     }
 
-    public function removeCapitulo(Capitulos $capitulo): static
+    public function removeCapitulo(Capitulo $capitulo): static
     {
-        if ($this->capitulos->removeElement($capitulo)) {
+        if ($this->capitulo->removeElement($capitulo)) {
             // set the owning side to null (unless already changed)
             if ($capitulo->getTemporada() === $this) {
                 $capitulo->setTemporada(null);
