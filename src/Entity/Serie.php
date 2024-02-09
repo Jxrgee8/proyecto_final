@@ -22,8 +22,8 @@ class Serie
     #[ORM\OneToMany(mappedBy: 'Serie', targetEntity: Temporada::class)]
     private Collection $temporadas;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $fecha_lanzamiento = null;
+    #[ORM\Column]
+    private ?int $fecha_lanzamiento = null;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $plataforma = null;
@@ -31,16 +31,19 @@ class Serie
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $genero = [];
 
-    #[ORM\ManyToOne(inversedBy: 'series')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Lista $Lista = null;
-
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $sinopsis = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $poster_src = null;
+
+    #[ORM\ManyToMany(targetEntity: Lista::class, inversedBy: 'series')]
+    private Collection $lista;
 
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
+        $this->lista = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,12 +93,12 @@ class Serie
         return $this;
     }
 
-    public function getFechaLanzamiento(): ?\DateTimeInterface
+    public function getFechaLanzamiento(): ?int
     {
         return $this->fecha_lanzamiento;
     }
 
-    public function setFechaLanzamiento(?\DateTimeInterface $fecha_lanzamiento): static
+    public function setFechaLanzamiento(?int $fecha_lanzamiento): static
     {
         $this->fecha_lanzamiento = $fecha_lanzamiento;
 
@@ -126,18 +129,6 @@ class Serie
         return $this;
     }
 
-    public function getLista(): ?Lista
-    {
-    return $this->Lista;
-    }
-
-    public function setLista(?Lista $Lista): static
-    {
-    $this->Lista = $Lista;
-
-    return $this;
-    }
-
     public function getSinopsis(): ?string
     {
         return $this->sinopsis;
@@ -146,6 +137,42 @@ class Serie
     public function setSinopsis(?string $sinopsis): static
     {
         $this->sinopsis = $sinopsis;
+
+        return $this;
+    }
+
+    public function getPosterSrc(): ?string
+    {
+        return $this->poster_src;
+    }
+
+    public function setPosterSrc(?string $poster_src): static
+    {
+        $this->poster_src = $poster_src;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lista>
+     */
+    public function getLista(): Collection
+    {
+        return $this->lista;
+    }
+
+    public function addListum(Lista $listum): static
+    {
+        if (!$this->lista->contains($listum)) {
+            $this->lista->add($listum);
+        }
+
+        return $this;
+    }
+
+    public function removeListum(Lista $listum): static
+    {
+        $this->lista->removeElement($listum);
 
         return $this;
     }
