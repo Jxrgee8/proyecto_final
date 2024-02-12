@@ -1,5 +1,4 @@
-{# templates/serie/views/showSerie.html.twig #}
-
+{# templates/serie/views/showAllSeries.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
@@ -9,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 
-{% block title %}{{ nombre_serie }}{% endblock %}
+{% block title %}Todas las Series de {{ genero }}{% endblock %}
 
 {% block body %}
     <!-- NAVBAR: -->
@@ -161,29 +160,36 @@
           </linearGradient>
         </defs>
       </svg>
-      <h1 class="titulo-pagina">Show Serie</h1>
+      <h1 class="titulo-pagina">Show All Series {{ genero }}</h1>
       <!-- TODO: DIV RESPONSIVE PARA CARDS -->
       <div class="container text-center card-container">
         <div class="row">
+
+          {% for serie in array_series %}
+
           <div class="col col-sm-12 col-md-4 col-lg-3">
             <!-- CARD -->
             <div class="card" style="width: 14rem; height: 24.6rem">
                 <a href="">
                 <!-- TODO: enlace a la serie -->
                 <img
-                    src="{{ asset(poster_serie) }}"
+                    src="{{ asset(serie.posterSrc) }}"
                     class="card-img-top"
                     alt="..."
                 />
                 </a>
                 <div class="card-body">
                     <p class="card-text">
-                    {{ nombre_serie }}
+                    {{ serie.nombre }}
                     </p>
                 </div>
             </div>
           </div>
+
+          {% endfor %}
+
         </div>
+        
       </div>
         <!-- Lorem: -->
         <div>

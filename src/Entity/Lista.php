@@ -30,7 +30,7 @@ class Lista
         $this->series = new ArrayCollection();
     }
 
-    /* //TODO: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
+    /* // ?: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
     public function setId(int $id): static
     {
         $this->id = $id;

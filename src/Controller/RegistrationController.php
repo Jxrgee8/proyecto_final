@@ -39,7 +39,7 @@ class RegistrationController extends AbstractController
             
             $usuario = $usuarioRepository->find($user->getId());
 
-            // TODO: CREAR ID FORMADO POR [ÚLTIMO ID + 1 (CONSULTA BBDD EN ListaRepository)] + [ID DEL USUARIO ($usuario)]
+            // ?: CREAR ID FORMADO POR [ÚLTIMO ID + 1 (CONSULTA BBDD EN ListaRepository)] + [ID DEL USUARIO ($usuario)]
             $lista1 = new Lista();
             $lista2 = new Lista();
             $lista3 = new Lista();
@@ -63,7 +63,6 @@ class RegistrationController extends AbstractController
 
             $entityManager->flush();
             
-
             // do anything else you need here, like send an email
 
             return $this->redirectToRoute('home');
