@@ -21,19 +21,6 @@ class GeneroRepository extends ServiceEntityRepository
         parent::__construct($registry, Genero::class);
     }
 
-    /**
-     * @return Genero[] Returns an array of Genero objects
-     */
-    public function buscarPorGenero($genero): array
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.nombre = :genero')
-            ->setParameter('genero', $genero)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
     public function buscarGenero($genero): ?Genero
     {
         return $this->createQueryBuilder('g')
