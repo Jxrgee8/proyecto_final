@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\GeneroRepository;
+use App\Repository\PlataformaRepository;
 use App\Repository\SerieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,7 @@ class SerieController extends AbstractController
         }
 
         return $this->render('serie/views/showSerie.html.twig', [
+            'id_serie' => $serie->getId(),
             'nombre_serie' => $serie->getNombre(),
             'poster_serie' => $serie->getPosterSrc()
         ]);
@@ -60,6 +62,26 @@ class SerieController extends AbstractController
         return $this->render('serie/views/showAllSeriesGenero.html.twig', [
             'array_series' => $array_series,
             'genero' => $genero_string
+        ]);
+    }
+
+    #[Route('/mostrarSeries/{plataforma}')]
+    public function mostrarSeriesPorPlataforma(PlataformaRepository $plataformaRepository, string $plataforma): Response
+    {
+        $plataforma = $plataformaRepository->buscarPlataforma($plataforma);
+        $plataforma_string = $plataforma->getNombre();
+        
+        if (!$plataforma) {
+            throw $this->createNotFoundException((
+                '404 Not Found' // TODO: redirigir a página de error
+            ));
+        }
+
+        $array_series = $plataforma->getSerie();
+
+        return $this->render('serie/views/showAllSeriesPLataforma.html.twig', [
+            'array_series' => $array_series,
+            'plataforma' => $plataforma_string
         ]);
     }
 

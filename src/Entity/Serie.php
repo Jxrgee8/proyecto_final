@@ -25,9 +25,6 @@ class Serie
     #[ORM\Column]
     private ?int $fecha_lanzamiento = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    private ?array $plataforma = null;
-
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $sinopsis = null;
 
@@ -40,11 +37,15 @@ class Serie
     #[ORM\ManyToMany(targetEntity: Genero::class, mappedBy: 'serie')]
     private Collection $genero;
 
+    #[ORM\ManyToMany(targetEntity: Plataforma::class, mappedBy: 'serie')]
+    private Collection $plataformas;
+
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
         $this->lista = new ArrayCollection();
         $this->genero = new ArrayCollection();
+        $this->plataformas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,18 +103,6 @@ class Serie
     public function setFechaLanzamiento(?int $fecha_lanzamiento): static
     {
         $this->fecha_lanzamiento = $fecha_lanzamiento;
-
-        return $this;
-    }
-
-    public function getPlataforma(): ?array
-    {
-        return $this->plataforma;
-    }
-
-    public function setPlataforma(?array $plataforma): static
-    {
-        $this->plataforma = $plataforma;
 
         return $this;
     }
@@ -188,6 +177,33 @@ class Serie
     {
         if ($this->genero->removeElement($genero)) {
             $genero->removeSerie($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plataforma>
+     */
+    public function getPlataformas(): Collection
+    {
+        return $this->plataformas;
+    }
+
+    public function addPlataforma(Plataforma $plataforma): static
+    {
+        if (!$this->plataformas->contains($plataforma)) {
+            $this->plataformas->add($plataforma);
+            $plataforma->addSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlataforma(Plataforma $plataforma): static
+    {
+        if ($this->plataformas->removeElement($plataforma)) {
+            $plataforma->removeSerie($this);
         }
 
         return $this;

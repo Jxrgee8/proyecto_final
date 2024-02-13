@@ -165,75 +165,28 @@
       <!-- TODO: DIV RESPONSIVE PARA CARDS -->
       <div class="container text-center card-container">
         <div class="row">
+          {% for serie in array_series %}
+
           <div class="col col-sm-12 col-md-4 col-lg-3">
             <!-- CARD -->
             <div class="card" style="width: 14rem; height: 24.6rem">
-              <a href="">
+                <a href="{{ path('mostrar_serie', {'id': serie.id}) }}">
                 <!-- TODO: enlace a la serie -->
                 <img
-                  src="{{ asset('img/posters/BB_POSTER.jpg') }}"
-                  class="card-img-top"
-                  alt="..."
+                    src="{{ asset(serie.posterSrc) }}"
+                    class="card-img-top"
+                    alt="..."
                 />
-              </a>
-              <div class="card-body">
-                <p class="card-text">
-                  S01 - 4/7
-                  <!-- TODO: recoger info de BBDD -->
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a href="#" class="card-link"
-                    ><img src="{{ asset('img/icons/plus-square.svg') }}"
-                  /></a>
-                </p>
-              </div>
+                </a>
+                <div class="card-body">
+                    <p class="card-text">
+                    {{ serie.nombre }}
+                    </p>
+                </div>
             </div>
           </div>
-          <div class="col col-sm-12 col-md-4 col-lg-3">
-            <!-- CARD -->
-            <div class="card" style="width: 14rem; height: 24.6rem">
-              <a href="">
-                <!-- TODO: enlace a la serie -->
-                <img
-                  src="{{ asset('img/posters/BCS_POSTER.jpg') }}"
-                  class="card-img-top"
-                  alt="..."
-                />
-              </a>
-              <div class="card-body">
-                <p class="card-text">
-                  S06 - 9/10
-                  <!-- TODO: recoger info de BBDD -->
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a href="#" class="card-link"
-                    ><img src="{{ asset('img/icons/plus-square.svg') }}"
-                  /></a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col col-sm-12 col-md-4 col-lg-3">
-            <!-- CARD -->
-            <div class="card" style="width: 14rem; height: 24.6rem">
-              <a href="">
-                <!-- TODO: enlace a la serie -->
-                <img
-                  src="{{ asset('img/posters/GOT_POSTER.jpg') }}"
-                  class="card-img-top"
-                  alt="..."
-                />
-              </a>
-              <div class="card-body">
-                <p class="card-text">
-                  S04 - 7/10
-                  <!-- TODO: recoger info de BBDD -->
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a href="#" class="card-link"
-                    ><img src="{{ asset('img/icons/plus-square.svg') }}"
-                  /></a>
-                </p>
-              </div>
-            </div>
-          </div>
+
+          {% endfor %}
         </div>
       </div>
         <!-- Lorem: -->

@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg d-flex">
       <div class="container-fluid">
         <!-- ICONO: -->
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{ path('home') }}">
           <svg
             height="50px"
             width="50px"
@@ -104,21 +104,21 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link activo" aria-current="page" href="">Inicio</a>
+              <a class="nav-link" href="{{ path('home') }}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pages/perfil.html">Perfil</a>
+              <a class="nav-link" href="">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pages/seguimiento.html"
+              <a class="nav-link" href=""
                 >Lista de Seguimiento</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pages/destacados.html">Destacados</a>
+              <a class="nav-link" href="">Destacados</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../pages/buscar.html">Buscar</a>
+              <a class="nav-link" href="">Buscar</a>
             </li>
           </ul>
         </div>
@@ -168,7 +168,7 @@
           <div class="col col-sm-12 col-md-4 col-lg-3">
             <!-- CARD -->
             <div class="card" style="width: 14rem; height: 24.6rem">
-                <a href="">
+                <a href="{{ path('mostrar_serie', {'id': id_serie}) }}">
                 <!-- TODO: enlace a la serie -->
                 <img
                     src="{{ asset(poster_serie) }}"

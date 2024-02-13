@@ -22,6 +22,7 @@ class LoginController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
             $this->redirectToRoute('home')
+            // TODO: redirect distinto si es admin
         ]);
         
 
