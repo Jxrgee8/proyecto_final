@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\GeneroRepository;
 use App\Repository\SerieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,32 +44,22 @@ class SerieController extends AbstractController
     }
 
     #[Route('/mostrarSeries/{genero}')]
-    public function mostrarSeriesPorGenero(SerieRepository $serieRepository, string $genero): Response
+    public function mostrarSeriesPorGenero(GeneroRepository $generoRepository, string $genero): Response
     {
-        $array_series = $serieRepository->buscarPorGenero($genero);
-
-        /*
-        $tareas = $tareaRepository->findTareasMayorPrioridad($pri); // Objetos
-
-        $tareas_string = "";
-
-        // Procesar objetos:    
-        foreach($tareas as $tarea) {
-            $tareas_string = $tareas_string." >".$tarea->getNombre()." (Objeto)";
-        }
+        $genero = $generoRepository->buscarGenero($genero);
+        $genero_string = $genero->getNombre();
         
-        return new Response('Las tareas seleccionadas son: ' . $tareas_string);
-        */
-
-        if (!$array_series) {
+        if (!$genero) {
             throw $this->createNotFoundException((
                 '404 Not Found' // TODO: redirigir a página de error
             ));
         }
 
+        $array_series = $genero->getSerie();
+
         return $this->render('serie/views/showAllSeriesGenero.html.twig', [
             'array_series' => $array_series,
-            'genero' => $genero
+            'genero' => $genero_string
         ]);
     }
 

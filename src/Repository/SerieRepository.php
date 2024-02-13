@@ -20,24 +20,4 @@ class SerieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Serie::class);
     }
-
-    /**
-     * @return Serie[]
-     */
-    public function buscarPorGenero(string $genero): array
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            '
-            SELECT s
-            FROM App\Entity\Serie s
-            WHERE s.genero > :genero
-            '
-        )->setParameter('genero', $genero);
-
-        // returns Tarea[]
-        return $query->getResult();
-    }
-
 }

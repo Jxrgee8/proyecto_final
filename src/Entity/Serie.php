@@ -28,22 +28,23 @@ class Serie
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $plataforma = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
-    private array $genero = [];
-
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $sinopsis = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster_src = null;
 
-    #[ORM\ManyToMany(targetEntity: Lista::class, inversedBy: 'series')]
+    #[ORM\ManyToMany(targetEntity: Lista::class, inversedBy: 'serie')]
     private Collection $lista;
+
+    #[ORM\ManyToMany(targetEntity: Genero::class, mappedBy: 'serie')]
+    private Collection $genero;
 
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
         $this->lista = new ArrayCollection();
+        $this->genero = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,18 +118,6 @@ class Serie
         return $this;
     }
 
-    public function getGenero(): array
-    {
-        return $this->genero;
-    }
-
-    public function setGenero(array $genero): static
-    {
-        $this->genero = $genero;
-
-        return $this;
-    }
-
     public function getSinopsis(): ?string
     {
         return $this->sinopsis;
@@ -173,6 +162,33 @@ class Serie
     public function removeListum(Lista $listum): static
     {
         $this->lista->removeElement($listum);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Genero>
+     */
+    public function getGenero(): Collection
+    {
+        return $this->genero;
+    }
+
+    public function addGenero(Genero $genero): static
+    {
+        if (!$this->genero->contains($genero)) {
+            $this->genero->add($genero);
+            $genero->addSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenero(Genero $genero): static
+    {
+        if ($this->genero->removeElement($genero)) {
+            $genero->removeSerie($this);
+        }
 
         return $this;
     }

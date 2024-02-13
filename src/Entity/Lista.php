@@ -23,11 +23,11 @@ class Lista
     private ?Usuario $usuario = null;
 
     #[ORM\ManyToMany(targetEntity: Serie::class, mappedBy: 'lista')]
-    private Collection $series;
+    private Collection $serie;
 
     public function __construct()
     {
-        $this->series = new ArrayCollection();
+        $this->serie = new ArrayCollection();
     }
 
     /* // ?: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
@@ -71,25 +71,25 @@ class Lista
     /**
      * @return Collection<int, Serie>
      */
-    public function getSeries(): Collection
+    public function getSerie(): Collection
     {
-        return $this->series;
+        return $this->serie;
     }
 
-    public function addSeries(Serie $series): static
+    public function addSerie(Serie $serie): static
     {
-        if (!$this->series->contains($series)) {
-            $this->series->add($series);
-            $series->addListum($this);
+        if (!$this->serie->contains($serie)) {
+            $this->serie->add($serie);
+            $serie->addListum($this);
         }
 
         return $this;
     }
 
-    public function removeSeries(Serie $series): static
+    public function removeSerie(Serie $serie): static
     {
-        if ($this->series->removeElement($series)) {
-            $series->removeListum($this);
+        if ($this->serie->removeElement($serie)) {
+            $serie->removeListum($this);
         }
 
         return $this;
