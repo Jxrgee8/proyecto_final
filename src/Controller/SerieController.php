@@ -11,23 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SerieController extends AbstractController
 {
-    #[Route('/mostrarSeries', name: 'mostrar_series')]
-    public function mostrarSeries(SerieRepository $serieRepository): Response
-    {
-        $array_series = $serieRepository->findAll();
-
-        if (!$array_series) {
-            throw $this->createNotFoundException(
-                '404 Not found' // TODO: redirigir a página de error
-            );
-        }
-
-        return $this->render('serie/views/showAllSeries.html.twig', [
-            'array_series' => $array_series
-        ]);
-    }
-
-    #[Route('/mostrarSerie/{id}', name: 'mostrar_serie')]
+    #[Route('/mostrarSerie/id={id}', name: 'mostrar_serie_id')]
     public function mostrarSerie(SerieRepository $serieRepository, int $id): Response
     {
         $serie = $serieRepository->find($id);
@@ -45,8 +29,24 @@ class SerieController extends AbstractController
         ]);
     }
 
-    #[Route('/mostrarSeries/{genero}')]
-    public function mostrarSeriesPorGenero(GeneroRepository $generoRepository, string $genero): Response
+    #[Route('/mostrarSeries', name: 'mostrar_series')]
+    public function mostrarSeries(SerieRepository $serieRepository): Response
+    {
+        $array_series = $serieRepository->findAll();
+
+        if (!$array_series) {
+            throw $this->createNotFoundException(
+                '404 Not found' // TODO: redirigir a página de error
+            );
+        }
+
+        return $this->render('serie/views/showAllSeries.html.twig', [
+            'array_series' => $array_series
+        ]);
+    }
+
+    #[Route('/buscarSerie/genre={genero}', name: 'buscar_serie_genero')]
+    public function buscarSeriePorGenero(GeneroRepository $generoRepository, string $genero): Response
     {
         $genero = $generoRepository->buscarGenero($genero);
         $genero_string = $genero->getNombre();
@@ -65,8 +65,8 @@ class SerieController extends AbstractController
         ]);
     }
 
-    #[Route('/mostrarSeries/{plataforma}')]
-    public function mostrarSeriesPorPlataforma(PlataformaRepository $plataformaRepository, string $plataforma): Response
+    #[Route('/buscarSerie/plat={plataforma}', name: 'buscar_serie_plataforma')]
+    public function buscarSeriePorPlataforma(PlataformaRepository $plataformaRepository, string $plataforma): Response
     {
         $plataforma = $plataformaRepository->buscarPlataforma($plataforma);
         $plataforma_string = $plataforma->getNombre();
@@ -79,7 +79,7 @@ class SerieController extends AbstractController
 
         $array_series = $plataforma->getSerie();
 
-        return $this->render('serie/views/showAllSeriesPLataforma.html.twig', [
+        return $this->render('serie/views/showAllSeriesPlataforma.html.twig', [
             'array_series' => $array_series,
             'plataforma' => $plataforma_string
         ]);
