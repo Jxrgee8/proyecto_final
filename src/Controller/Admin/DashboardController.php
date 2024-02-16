@@ -2,7 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Capitulo;
 use App\Entity\Genero;
+use App\Entity\Plataforma;
+use App\Entity\Serie;
+use App\Entity\Temporada;
+use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -42,8 +47,15 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
    {
        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+       yield MenuItem::section('Usuarios');
+       yield MenuItem::linkToCrud('Usuario', 'fa fa-user', Usuario::class);
+       yield MenuItem::section('Series');
+       yield MenuItem::linkToCrud('Serie', 'fa fa-tv', Serie::class);
+       yield MenuItem::linkToCrud('Temporada', 'fa fa-th-list', Temporada::class);
+       yield MenuItem::linkToCrud('Capitulo', 'fa fa-eye', Capitulo::class);
        yield MenuItem::section('Información de Serie');
        yield MenuItem::linkToCrud('Género', 'fa fa-tags', Genero::class);
+       yield MenuItem::linkToCrud('Plataforma', 'fa fa-play-circle-o', Plataforma::class);
    }
 
 }
