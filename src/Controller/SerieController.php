@@ -8,6 +8,7 @@ use App\Repository\SerieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\UnicodeString;
 
 class SerieController extends AbstractController
 {
@@ -48,7 +49,9 @@ class SerieController extends AbstractController
     #[Route('/buscarSerie/genre={genero}', name: 'buscar_serie_genero')]
     public function buscarSeriePorGenero(GeneroRepository $generoRepository, string $genero): Response
     {
-        $genero = $generoRepository->buscarGenero($genero);
+        $genero_buscar = new UnicodeString($genero);
+        $genero_lower = ($genero_buscar)->lower();
+        $genero = $generoRepository->buscarGenero($genero_lower);
         $genero_string = $genero->getNombre();
         
         if (!$genero) {
@@ -68,7 +71,9 @@ class SerieController extends AbstractController
     #[Route('/buscarSerie/plat={plataforma}', name: 'buscar_serie_plataforma')]
     public function buscarSeriePorPlataforma(PlataformaRepository $plataformaRepository, string $plataforma): Response
     {
-        $plataforma = $plataformaRepository->buscarPlataforma($plataforma);
+        $plataforma_buscar = new UnicodeString($plataforma);
+        $plataforma_lower = ($plataforma_buscar)->lower();
+        $plataforma = $plataformaRepository->buscarPlataforma($plataforma_lower);
         $plataforma_string = $plataforma->getNombre();
         
         if (!$plataforma) {
