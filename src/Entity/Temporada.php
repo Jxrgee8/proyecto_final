@@ -88,4 +88,13 @@ class Temporada
 
         return $this;
     }
+
+    public function getTemporadaSerie() {
+        return $this->getSerie()." - Temporada ".$this->getNumeroTemp();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getTemporadaSerie();
+    }
 }

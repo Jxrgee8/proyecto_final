@@ -20,7 +20,7 @@ class CapituloCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             NumberField::new('numero_cap')->setLabel('Número de Capítulo'),
-            AssociationField::new('Temporada')->autocomplete(),
+            AssociationField::new('Temporada'),
         ];
     }
 }
