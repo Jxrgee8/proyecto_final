@@ -27,6 +27,7 @@ class UsuarioCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
+            TextField::new('username'),
             TextField::new('password')->setFormType(PasswordType::class)->onlyOnForms(),
             ChoiceField::new('roles')->setChoices([
                 'Rol de Admin' => 'ROLE_ADMIN',
