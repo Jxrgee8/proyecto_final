@@ -38,14 +38,14 @@ class Serie
     private Collection $genero;
 
     #[ORM\ManyToMany(targetEntity: Plataforma::class, mappedBy: 'serie')]
-    private Collection $plataformas;
+    private Collection $plataforma;
 
     public function __construct()
     {
         $this->temporadas = new ArrayCollection();
         $this->lista = new ArrayCollection();
         $this->genero = new ArrayCollection();
-        $this->plataformas = new ArrayCollection();
+        $this->plataforma = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,15 +185,15 @@ class Serie
     /**
      * @return Collection<int, Plataforma>
      */
-    public function getPlataformas(): Collection
+    public function getPlataforma(): Collection
     {
-        return $this->plataformas;
+        return $this->plataforma;
     }
 
     public function addPlataforma(Plataforma $plataforma): static
     {
-        if (!$this->plataformas->contains($plataforma)) {
-            $this->plataformas->add($plataforma);
+        if (!$this->plataforma->contains($plataforma)) {
+            $this->plataforma->add($plataforma);
             $plataforma->addSerie($this);
         }
 
@@ -202,7 +202,7 @@ class Serie
 
     public function removePlataforma(Plataforma $plataforma): static
     {
-        if ($this->plataformas->removeElement($plataforma)) {
+        if ($this->plataforma->removeElement($plataforma)) {
             $plataforma->removeSerie($this);
         }
 

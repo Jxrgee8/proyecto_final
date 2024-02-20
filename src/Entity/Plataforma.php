@@ -18,7 +18,7 @@ class Plataforma
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'plataformas')]
+    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'plataforma')]
     private Collection $serie;
 
     public function __construct()
@@ -65,5 +65,10 @@ class Plataforma
         $this->serie->removeElement($serie);
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nombre;
     }
 }

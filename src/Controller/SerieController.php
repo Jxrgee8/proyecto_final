@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Repository\GeneroRepository;
+use App\Repository\ListaRepository;
 use App\Repository\PlataformaRepository;
 use App\Repository\SerieRepository;
+use App\Repository\UsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,4 +92,18 @@ class SerieController extends AbstractController
         ]);
     }
 
+    #[Route('/empezarSerie/id={id}', name: 'empezar_serie')]
+    public function empezarSerie(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, int $id): Response
+    {
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
+        $array_series = $listaUsuario->getSerie();
+
+        return $this->render('serie/views/showAllSeriesPorVer.html.twig', [
+            'array_series' => $array_series
+        ]);
+    }
 }

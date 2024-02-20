@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Lista;
+use App\Entity\Serie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +22,51 @@ class ListaRepository extends ServiceEntityRepository
         parent::__construct($registry, Lista::class);
     }
 
-//    /**
-//     * @return Lista[] Returns an array of Lista objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function listaSeriesPorVer($usuario): ?Lista
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.usuario = :usuario')
+            ->andWhere('l.tipo_lista = :lista')
+            ->setParameter('usuario', $usuario)
+            ->setParameter('lista', 'series_por_ver')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?Lista
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function listaSeriesViendo($usuario): ?Lista
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.usuario = :usuario')
+            ->andWhere('l.tipo_lista = :lista')
+            ->setParameter('usuario', $usuario)
+            ->setParameter('lista', 'series_viendo')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function listaSeriesVistas($usuario): ?Lista
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.usuario = :usuario')
+            ->andWhere('l.tipo_lista = :lista')
+            ->setParameter('usuario', $usuario)
+            ->setParameter('lista', 'series_vistas')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function listaSeriesFavoitas($usuario): ?Lista
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere('l.usuario = :usuario')
+            ->andWhere('l.tipo_lista = :lista')
+            ->setParameter('usuario', $usuario)
+            ->setParameter('lista', 'series_favoritas')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
