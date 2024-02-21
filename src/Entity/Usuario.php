@@ -31,10 +31,11 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 20, unique: true)]
+    // TODO: Hacer único y controlar su inserción en la bbdd en el registro
+    #[ORM\Column(length: 20)]
     private ?string $username = null;
 
-    #[ORM\OneToMany(mappedBy: 'usuario_id', targetEntity: Lista::class)]
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Lista::class, cascade: ['remove'])]
     private Collection $listas;
 
     public function __construct()

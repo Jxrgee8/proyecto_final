@@ -65,25 +65,11 @@ class RegistrationController extends AbstractController
             
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
-
-    /** Función para crear una cuenta admin */
-    /*#[Route('/crear_admin', name: 'register_admin')]
-    public function registerAdmin(EntityManagerInterface $entityManager): Response
-    {
-        $user = new Usuario();
-        $user->setRoles(['ROLE_ADMIN']);
-        
-        $entityManager->persist($user);
-        $entityManager->flush();
-        // do anything else you need here, like send an email
-        
-        return new Response('Admin creado');
-    }*/
 }

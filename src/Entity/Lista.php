@@ -80,7 +80,7 @@ class Lista
     {
         if (!$this->serie->contains($serie)) {
             $this->serie->add($serie);
-            $serie->addListum($this);
+            $serie->addLista($this);
         }
 
         return $this;
@@ -89,7 +89,7 @@ class Lista
     public function removeSerie(Serie $serie): static
     {
         if ($this->serie->removeElement($serie)) {
-            $serie->removeListum($this);
+            $serie->removeLista($this);
         }
 
         return $this;

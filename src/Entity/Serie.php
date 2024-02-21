@@ -139,18 +139,18 @@ class Serie
         return $this->lista;
     }
 
-    public function addListum(Lista $listum): static
+    public function addLista(Lista $lista): static
     {
-        if (!$this->lista->contains($listum)) {
-            $this->lista->add($listum);
+        if (!$this->lista->contains($lista)) {
+            $this->lista->add($lista);
         }
 
         return $this;
     }
 
-    public function removeListum(Lista $listum): static
+    public function removeLista(Lista $lista): static
     {
-        $this->lista->removeElement($listum);
+        $this->lista->removeElement($lista);
 
         return $this;
     }
