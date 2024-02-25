@@ -19,7 +19,7 @@ class Serie
     private ?string $nombre = null;
 
     #[ORM\OneToMany(mappedBy: 'Serie', targetEntity: Temporada::class)]
-    private Collection $temporadas;
+    private Collection $temporada;
 
     #[ORM\Column]
     private ?int $fecha_lanzamiento = null;
@@ -36,15 +36,15 @@ class Serie
     #[ORM\ManyToMany(targetEntity: Genero::class, mappedBy: 'serie')]
     private Collection $genero;
 
-    #[ORM\ManyToMany(targetEntity: Plataforma::class, mappedBy: 'serie')]
-    private Collection $plataforma;
+    #[ORM\ManyToMany(targetEntity: Streaming::class, mappedBy: 'serie')]
+    private Collection $streamings;
 
     public function __construct()
     {
-        $this->temporadas = new ArrayCollection();
+        $this->temporada = new ArrayCollection();
         $this->lista = new ArrayCollection();
         $this->genero = new ArrayCollection();
-        $this->plataforma = new ArrayCollection();
+        $this->streamings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -69,13 +69,13 @@ class Serie
      */
     public function getTemporadas(): Collection
     {
-        return $this->temporadas;
+        return $this->temporada;
     }
 
     public function addTemporada(Temporada $temporada): static
     {
-        if (!$this->temporadas->contains($temporada)) {
-            $this->temporadas->add($temporada);
+        if (!$this->temporada->contains($temporada)) {
+            $this->temporada->add($temporada);
             $temporada->setSerie($this);
         }
 
@@ -84,7 +84,7 @@ class Serie
 
     public function removeTemporada(Temporada $temporada): static
     {
-        if ($this->temporadas->removeElement($temporada)) {
+        if ($this->temporada->removeElement($temporada)) {
             // set the owning side to null (unless already changed)
             if ($temporada->getSerie() === $this) {
                 $temporada->setSerie(null);
@@ -152,6 +152,7 @@ class Serie
         $this->lista->removeElement($lista);
 
         return $this;
+
     }
 
     /**
@@ -181,36 +182,37 @@ class Serie
         return $this;
     }
 
-    /**
-     * @return Collection<int, Plataforma>
-     */
-    public function getPlataforma(): Collection
-    {
-        return $this->plataforma;
-    }
-
-    public function addPlataforma(Plataforma $plataforma): static
-    {
-        if (!$this->plataforma->contains($plataforma)) {
-            $this->plataforma->add($plataforma);
-            $plataforma->addSerie($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlataforma(Plataforma $plataforma): static
-    {
-        if ($this->plataforma->removeElement($plataforma)) {
-            $plataforma->removeSerie($this);
-        }
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->nombre;
     }
 
+    /**
+     * @return Collection<int, Streaming>
+     */
+    public function getStreamings(): Collection
+    {
+        return $this->streamings;
+    }
+
+    public function addStreaming(Streaming $streaming): static
+    {
+        if (!$this->streamings->contains($streaming)) {
+            $this->streamings->add($streaming);
+            $streaming->addSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStreaming(Streaming $streaming): static
+    {
+        if ($this->streamings->removeElement($streaming)) {
+            $streaming->removeSerie($this);
+        }
+
+        return $this;
+    }
+
+    
 }

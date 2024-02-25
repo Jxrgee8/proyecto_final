@@ -18,7 +18,7 @@ class Temporada
     #[ORM\Column]
     private ?int $numero_temp = null;
 
-    #[ORM\ManyToOne(inversedBy: 'temporadas')]
+    #[ORM\ManyToOne(inversedBy: 'temporada')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Serie $Serie = null;
 

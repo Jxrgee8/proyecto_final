@@ -6,6 +6,7 @@ use App\Repository\GeneroRepository;
 use App\Repository\ListaRepository;
 use App\Repository\PlataformaRepository;
 use App\Repository\SerieRepository;
+use App\Repository\StreamingRepository;
 use App\Repository\UsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,25 +71,25 @@ class SerieController extends AbstractController
         ]);
     }
 
-    #[Route('/buscarSerie/plat={plataforma}', name: 'buscar_serie_plataforma')]
-    public function buscarSeriePorPlataforma(PlataformaRepository $plataformaRepository, string $plataforma): Response
+    #[Route('/buscarSerie/stream={streaming}', name: 'buscar_serie_streaming')]
+    public function buscarSeriePorStreaming(StreamingRepository $streamingRepository, string $streaming): Response
     {
-        $plataforma_buscar = new UnicodeString($plataforma);
-        $plataforma_lower = ($plataforma_buscar)->lower();
-        $plataforma = $plataformaRepository->buscarPlataforma($plataforma_lower);
-        $plataforma_string = $plataforma->getNombre();
+        $streaming_buscar = new UnicodeString($streaming);
+        $streaming_lower = ($streaming_buscar)->lower();
+        $streaming = $streamingRepository->buscarStreaming($streaming_lower);
+        $streaming_string = $streaming->getNombre();
         
-        if (!$plataforma) {
+        if (!$streaming) {
             throw $this->createNotFoundException((
                 '404 Not Found' // TODO: redirigir a página de error
             ));
         }
 
-        $array_series = $plataforma->getSerie();
+        $array_series = $streaming->getSerie();
 
-        return $this->render('serie/views/showAllSeriesPlataforma.html.twig', [
+        return $this->render('serie/views/showAllSeriesStreaming.html.twig', [
             'array_series' => $array_series,
-            'plataforma' => $plataforma_string
+            'streaming' => $streaming_string
         ]);
     }
 

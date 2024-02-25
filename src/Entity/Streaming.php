@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PlataformaRepository;
+use App\Repository\StreamingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlataformaRepository::class)]
-class Plataforma
+#[ORM\Entity(repositoryClass: StreamingRepository::class)]
+class Streaming
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +18,7 @@ class Plataforma
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'plataforma')]
+    #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'streamings')]
     private Collection $serie;
 
     public function __construct()

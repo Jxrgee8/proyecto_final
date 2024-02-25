@@ -4,8 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Capitulo;
 use App\Entity\Genero;
-use App\Entity\Plataforma;
 use App\Entity\Serie;
+use App\Entity\Streaming;
 use App\Entity\Temporada;
 use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -55,7 +55,7 @@ class DashboardController extends AbstractDashboardController
        yield MenuItem::linkToCrud('Capitulo', 'fa fa-eye', Capitulo::class);
        yield MenuItem::section('Información de Serie');
        yield MenuItem::linkToCrud('Género', 'fa fa-tags', Genero::class);
-       yield MenuItem::linkToCrud('Plataforma', 'fa fa-play-circle-o', Plataforma::class);
+       yield MenuItem::linkToCrud('Streaming', 'fa fa-play-circle-o', Streaming::class);
    }
 
 }

@@ -26,10 +26,10 @@ class SerieCrudController extends AbstractCrudController
             NumberField::new('fecha_lanzamiento'),
             TextEditorField::new('sinopsis'),
             TextField::new('poster_src')->setHelp("img/posters/SERIE_POSTER.jpg")->setLabel("Póster de Serie"),
-            AssociationField::new('genero')->setFormTypeOptions(['by_reference' => false])->setLabel("Nº de Géneros"),
+            AssociationField::new('genero')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false),
             ArrayField::new('genero')->hideOnForm(),
-            AssociationField::new('plataforma')->setFormTypeOptions(['by_reference' => false])->setLabel("Nº de Plataformas"),
-            ArrayField::new('plataforma')->hideOnForm(),
+            AssociationField::new('streamings')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false),
+            ArrayField::new('streamings')->hideOnForm(),
         ];
     }
 }
