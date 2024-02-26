@@ -1,0 +1,209 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 4vh;
+  }
+  
+  /* POSTER DE SERIE E INFORMACIÓN BÁSICA: */
+  aside {
+    flex: 30%;
+    padding: 20px;
+    justify-content: center;
+  }
+  
+  .flex-container-serie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .flex-container-serie .titulo-serie {
+    color: #fff;
+    font-size: 30px;
+    font-weight: bolder;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; /* ! Cambiar fuente */
+  }
+  
+  /** poster de serie: */
+  .flex-container-serie img {
+    width: 35vh;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  /** iconos de plataformas: */
+  .flex-container-serie .info-basica img {
+    border-radius: 5px;
+  }
+  
+  .flex-container-serie .estado-serie {
+    display: flex;
+    justify-content: space-around;
+    padding: 3vh;
+    background-color: #6b6464;
+    width: 35vh;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .flex-container-serie .estado-serie i {
+    cursor: pointer;
+  }
+  
+  .flex-container .estado-serie .icono-visto {
+    font-size: 5vh;
+    color: var(--visto);
+  }
+  
+  .flex-container .estado-serie .icono-por-ver {
+    font-size: 4.8vh;
+    color: var(--por-ver);
+  }
+  
+  .flex-container .estado-serie .icono-favorito {
+    font-size: 4.9vh;
+    background: var(--favorito);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .flex-container-serie .info-basica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-color-info);
+    border: 2px solid #fff;
+    width: 35vh;
+    border-radius: 5px;
+    margin-top: 5vh;
+    margin-bottom: 2vh;
+  }
+  
+  .flex-container-serie .info-basica div {
+    width: 95%;
+    margin-left: 5%;
+    margin-top: 1vh;
+  }
+  
+  .flex-container .info-basica div .titulo-info {
+    font-weight: bolder;
+    color: #000;
+    font-size: 18px;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(0.2turn, #000, var(--bg-color-info));
+    border-image-slice: 1;
+    width: 90%;
+  }
+  
+  .flex-container-serie .info-basica img {
+    width: 5vh;
+    height: 5vh;
+    margin: 2px;
+  }
+  
+  .flex-container-serie .info-basica li {
+    text-align: center;
+    background-color: #fff;
+    color: #000;
+    margin: 1vh 0;
+    padding: 3px;
+    width: 15vh;
+    font-size: 14.6px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: default;
+  }
+  
+  .flex-container-serie .info-basica .valoracion {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bolder;
+  }
+  .flex-container-serie .info-basica .valoracion .icono-estrella {
+    font-size: 24px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    background-image: linear-gradient(
+      to right,
+      #462523 0,
+      #cb9b51 22%,
+      #f6e27a 45%,
+      #f6f2c0 50%,
+      #f6e27a 55%,
+      #cb9b51 78%,
+      #462523 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 0.3px #fff;
+    background-clip: text;
+    margin-left: 3px;
+  }
+  
+  /* TEMPORADAS Y SINÓPSIS: */
+  section {
+    flex: 70%;
+    padding: 20px;
+    justify-content: center;
+  }
+  
+  .flex-container-temporadas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .flex-container-temporadas .titulo-temporadas {
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; /* ! Cambiar fuente */
+  }
+  
+  .flex-container-temporadas .lista-temporadas {
+    background-color: var(--bg-color-info);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 90%;
+    border: 2px solid #fff;
+    border-radius: 3px;
+  }
+  
+  .flex-container-temporadas .lista-temporadas .temporada {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-bottom: 2px solid #fff;
+    padding: 3.68vh;
+  }
+  
+  .flex-container-temporadas .lista-temporadas .temporada p {
+    margin: auto;
+  }
+  
+  .flex-container-temporadas .lista-temporadas .temporada.last {
+    border-bottom: 0;
+  }
+  
+  .flex-container-temporadas .sinopsis-serie {
+    background-color: var(--bg-color-info);
+    width: 90%;
+    border: 2px solid #fff;
+    border-radius: 3px;
+    padding: 2vh;
+    margin-top: 8vh;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    section {
+      border-top: solid 2px #fff;
+      margin-top: 4vh;
+      margin-bottom: 4vh;
+    }
+  }

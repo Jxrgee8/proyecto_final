@@ -19,6 +19,7 @@ class StreamingCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
+            TextField::new('icono_src')->setHelp("img/icons/streaming-icon.svg")->setLabel("Icono de Plataforma"),
         ];
     }
 }

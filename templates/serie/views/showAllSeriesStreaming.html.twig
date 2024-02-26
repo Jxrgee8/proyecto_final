@@ -1,21 +1,25 @@
-{# templates/serie/views/showAllSeries.html.twig #}
+{# templates/home/home.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 
-{% block title %}Series de {{ streaming }}{% endblock %}
+{% block title %}Series de {{ streaming }} {% endblock %}
 
 {% block body %}
     <!-- NAVBAR: -->
     <nav class="navbar navbar-expand-lg d-flex">
       <div class="container-fluid">
         <!-- ICONO: -->
-        <a class="navbar-brand" href="{{ path('home') }}">
+        <a class="navbar-brand" href="#">
           <svg
             height="50px"
             width="50px"
@@ -103,7 +107,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('home') }}">Inicio</a>
+              <a class="nav-link" aria-current="page" href="{{ path('home') }}">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="">Perfil</a>
@@ -132,102 +136,23 @@
 
     <!-- SECCIÓN VIENDO: -->
     <section class="contenedor-pagina">
-      <!-- Separación -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="4"
-        viewBox="0 0 1919 4"
-        fill="none"
-        class="linea-separador"
-      >
-        <path
-          d="M0 2H1920"
-          stroke="url(#paint0_linear_44_85_2)"
-          stroke-width="3"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_44_85_2"
-            x1="986"
-            y1="2.00193"
-            x2="911"
-            y2="2.0008"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#71DF7C" />
-            <stop offset="1" stop-color="white" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <h1 class="titulo-pagina">Show All Series Plataforma: {{ streaming }}</h1>
-      <!-- TODO: DIV RESPONSIVE PARA CARDS -->
-      <div class="container text-center card-container">
-        <div class="row">
+      <h1 class="titulo-pagina">Show series: {{ streaming }}</h1>
+      <div class="flex-container viendo-container">
 
-          {% for serie in array_series %}
-
-          <div class="col col-sm-12 col-md-4 col-lg-3">
-            <!-- CARD -->
-            <div class="card" style="width: 14rem; height: 24.6rem">
-                <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
-                <!-- TODO: enlace a la serie -->
-                <img
-                    src="{{ asset(serie.posterSrc) }}"
-                    class="card-img-top"
-                    alt="..."
-                />
-                </a>
-                <div class="card-body">
-                    <p class="card-text">
-                    {{ serie.nombre }}
-                    </p>
-                </div>
-            </div>
-          </div>
-
-          {% endfor %}
-
-        </div>
-        
-      </div>
-        <!-- Lorem: -->
+        <!-- TODO: where lista = series_viendo -->
+        {% for serie in array_series %}
         <div>
-        <br><br><br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consectetur velit a luctus luctus. Nullam in ipsum in nunc efficitur euismod et quis purus. Vestibulum quis dolor eget ante euismod egestas. Vivamus dictum, lectus sit amet semper efficitur, dolor felis pellentesque nisl, id blandit elit ante ut nisl. Maecenas consequat, tortor a dictum hendrerit, magna dui placerat mauris, at pretium leo nisi blandit nulla. Nulla hendrerit porta ipsum in fermentum. Quisque eu elit sit amet magna laoreet consectetur sit amet a dolor. Aliquam commodo viverra bibendum. In vitae sem est.
-        Nunc dignissim elit arcu, nec congue libero volutpat id. Curabitur condimentum feugiat elit eu gravida. Nullam leo libero, vestibulum a scelerisque et, dapibus quis est. Sed nec lacus lacinia, hendrerit lacus a, tristique est. Cras at dui efficitur, dignissim sapien at, consequat sapien. Duis ut sagittis ligula, eu auctor libero. Donec maximus ipsum ut leo mollis commodo. Vivamus ornare, risus ut laoreet faucibus, velit libero pellentesque mi, non vestibulum justo lacus sit amet urna. Morbi sagittis faucibus nisi, ac aliquet nisl facilisis at. Suspendisse vel pellentesque purus. Fusce commodo non nibh et dictum. Ut pellentesque facilisis sollicitudin.
-        Phasellus sit amet sapien risus. Maecenas ac pellentesque nibh. Nulla rutrum feugiat mi. Quisque vestibulum sapien non diam pulvinar pharetra. Sed accumsan vulputate lectus eu tristique. Phasellus eget facilisis diam, sit amet consectetur turpis. Nullam id ultricies augue, sed pretium metus. Suspendisse potenti.
-        Morbi eget blandit velit. Aenean in enim sapien. Nulla facilisi. Ut risus mi, dictum a velit non, dapibus malesuada erat. Cras porta nulla ante, id vulputate odio iaculis a. Sed ac facilisis dui. Nunc tincidunt est et massa auctor, sit amet ultricies nisl convallis. Maecenas venenatis volutpat purus, in dapibus turpis dapibus quis. Pellentesque quis orci pulvinar, consectetur arcu in, feugiat dui. Nulla lobortis vulputate convallis. Nunc nec eleifend libero. Cras scelerisque eros metus, a tristique nibh convallis ac. Ut quis tempor est, nec sodales velit. Duis eleifend et metus eget varius. 
-        <br><br><br>
+          <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
+            <img
+                src="{{ asset(serie.posterSrc) }}"
+                class="card-img-top"
+                alt="..."
+            />
+          </a>
         </div>
-      <!-- Separación -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="4"
-        viewBox="0 0 1919 4"
-        fill="none"
-        class="linea-separador"
-      >
-        <path
-          d="M0 2H1920"
-          stroke="url(#paint0_linear_44_85_2)"
-          stroke-width="3"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_44_85_2"
-            x1="986"
-            y1="2.00193"
-            x2="911"
-            y2="2.0008"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#71DF7C" />
-            <stop offset="1" stop-color="white" />
-          </linearGradient>
-        </defs>
-      </svg>
+        {% endfor %}
+
+      </div>
     </section>
 
     <!-- Pie de pagina (footer) -->

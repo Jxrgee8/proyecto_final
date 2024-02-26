@@ -21,6 +21,9 @@ class Streaming
     #[ORM\ManyToMany(targetEntity: Serie::class, inversedBy: 'streamings')]
     private Collection $serie;
 
+    #[ORM\Column(length: 60, nullable: true)]
+    private ?string $icono_src = null;
+
     public function __construct()
     {
         $this->serie = new ArrayCollection();
@@ -70,5 +73,17 @@ class Streaming
     public function __toString(): string
     {
         return $this->nombre;
+    }
+
+    public function getIconoSrc(): ?string
+    {
+        return $this->icono_src;
+    }
+
+    public function setIconoSrc(?string $icono_src): static
+    {
+        $this->icono_src = $icono_src;
+
+        return $this;
     }
 }

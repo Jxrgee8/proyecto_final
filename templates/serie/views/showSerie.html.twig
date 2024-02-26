@@ -4,9 +4,13 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/styles.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/serie.css') }}">
+
 {% endblock %}
 
 {% block title %}{{ nombre_serie }}{% endblock %}
@@ -132,97 +136,114 @@
     </nav>
 
     <!-- SECCIÓN VIENDO: -->
-    <section class="contenedor-pagina">
-      <!-- Separación -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="4"
-        viewBox="0 0 1919 4"
-        fill="none"
-        class="linea-separador"
-      >
-        <path
-          d="M0 2H1920"
-          stroke="url(#paint0_linear_44_85_2)"
-          stroke-width="3"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_44_85_2"
-            x1="986"
-            y1="2.00193"
-            x2="911"
-            y2="2.0008"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#71DF7C" />
-            <stop offset="1" stop-color="white" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <h1 class="titulo-pagina">Show Serie: {{ nombre_serie }}</h1>
-      <!-- TODO: DIV RESPONSIVE PARA CARDS -->
-      <div class="container text-center card-container">
-        <div class="row">
-          <div class="col col-sm-12 col-md-4 col-lg-3">
-            <!-- CARD -->
-            <div class="card" style="width: 14rem; height: 24.6rem">
-                <a href="{{ path('mostrar_serie_id', {'id': id_serie}) }}">
-                <!-- TODO: enlace a la serie -->
-                <img
-                    src="{{ asset(poster_serie) }}"
-                    class="card-img-top"
-                    alt="..."
-                />
-                </a>
-                <div class="card-body">
-                    <p class="card-text">
-                    {{ nombre_serie }}
-                    </p>
-                </div>
+    <div class="flex-container">
+      <aside>
+        <div class="flex-container-serie">
+          <p class="titulo-serie"><i>{{ nombre_serie }}</i></p>
+          <img
+            src="{{ asset(poster_serie) }}"
+            alt={{ nombre_serie }}
+            title={{ nombre_serie }}
+          />
+          <!-- TODO: Añadir/Eliminar de listas dependiendo del estado: -->
+          <!-- TODO: Hacer excluyente estado visto y por ver: -->
+          <div class="estado-serie">
+            <i class="bi bi-eye icono-visto" id="icono-visto"></i>
+            <i class="bi bi-bookmark icono-por-ver" id="icono-por-ver"></i>
+            <i class="bi bi-heart icono-favorito" id="icono-favorito"></i>
+          </div>
+          <div class="info-basica">
+          <!-- TODO: getPlataforma de la base de datos y asociar icono: -->
+            <div>
+              <p class="titulo-info">Plataformas</p>
+              <img
+                src="{{ asset('img/icons/netflix-icon.svg') }}"
+                alt="Netflix"
+                title="Netflix"
+              />
+              <img
+                src="{{ asset('img/icons/prime-video-icon.svg') }}"
+                alt="Amazon Prime Video"
+                title="Amazon Prime Video"
+              />
+              <img
+                src="{{ asset('img/icons/hbo-max-icon.svg') }}"
+                alt="HBO Max"
+                title="HBO Max"
+              />
+            </div>
+            <div>
+              <p class="titulo-info">Géneros</p>
+              <ul>
+                <li>Suspense</li>
+                <li>Drama</li>
+                <li>Acción</li>
+              </ul>
+            </div>
+            <div>
+              <p class="titulo-info">Valoración</p>
+              <p class="valoracion">
+                8.6
+                <i class="bi bi-star-fill icono-estrella"></i>
+              </p>
+            </div>
+            <div>
+              <p class="titulo-info">Director(es)</p>
+              <ul>
+                <!-- TODO: posible enlace a directores (wikipedia) -->
+                <li>Vince Gilligan</li>
+                <li>Michael Slovis</li>
+                <li>Colin Bucksey</li>
+              </ul>
             </div>
           </div>
         </div>
-      </div>
-        <!-- Lorem: -->
-        <div>
-        <br><br><br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consectetur velit a luctus luctus. Nullam in ipsum in nunc efficitur euismod et quis purus. Vestibulum quis dolor eget ante euismod egestas. Vivamus dictum, lectus sit amet semper efficitur, dolor felis pellentesque nisl, id blandit elit ante ut nisl. Maecenas consequat, tortor a dictum hendrerit, magna dui placerat mauris, at pretium leo nisi blandit nulla. Nulla hendrerit porta ipsum in fermentum. Quisque eu elit sit amet magna laoreet consectetur sit amet a dolor. Aliquam commodo viverra bibendum. In vitae sem est.
-        Nunc dignissim elit arcu, nec congue libero volutpat id. Curabitur condimentum feugiat elit eu gravida. Nullam leo libero, vestibulum a scelerisque et, dapibus quis est. Sed nec lacus lacinia, hendrerit lacus a, tristique est. Cras at dui efficitur, dignissim sapien at, consequat sapien. Duis ut sagittis ligula, eu auctor libero. Donec maximus ipsum ut leo mollis commodo. Vivamus ornare, risus ut laoreet faucibus, velit libero pellentesque mi, non vestibulum justo lacus sit amet urna. Morbi sagittis faucibus nisi, ac aliquet nisl facilisis at. Suspendisse vel pellentesque purus. Fusce commodo non nibh et dictum. Ut pellentesque facilisis sollicitudin.
-        Phasellus sit amet sapien risus. Maecenas ac pellentesque nibh. Nulla rutrum feugiat mi. Quisque vestibulum sapien non diam pulvinar pharetra. Sed accumsan vulputate lectus eu tristique. Phasellus eget facilisis diam, sit amet consectetur turpis. Nullam id ultricies augue, sed pretium metus. Suspendisse potenti.
-        Morbi eget blandit velit. Aenean in enim sapien. Nulla facilisi. Ut risus mi, dictum a velit non, dapibus malesuada erat. Cras porta nulla ante, id vulputate odio iaculis a. Sed ac facilisis dui. Nunc tincidunt est et massa auctor, sit amet ultricies nisl convallis. Maecenas venenatis volutpat purus, in dapibus turpis dapibus quis. Pellentesque quis orci pulvinar, consectetur arcu in, feugiat dui. Nulla lobortis vulputate convallis. Nunc nec eleifend libero. Cras scelerisque eros metus, a tristique nibh convallis ac. Ut quis tempor est, nec sodales velit. Duis eleifend et metus eget varius. 
-        <br><br><br>
+      </aside>
+      <section>
+        <div class="flex-container-temporadas">
+          <p class="titulo-temporadas">Temporadas</p>
+          <div class="lista-temporadas">
+            <div class="temporada">
+              <p>Temporada 1</p>
+              <p>7 Capítulos</p>
+            </div>
+            <div class="temporada">
+              <p>Temporada 2</p>
+              <p>13 Capítulos</p>
+            </div>
+            <div class="temporada">
+              <p>Temporada 3</p>
+              <p>13 Capítulos</p>
+            </div>
+            <div class="temporada">
+              <p>Temporada 4</p>
+              <p>13 Capítulos</p>
+            </div>
+            <div class="temporada last">
+              <p>Temporada 5</p>
+              <p>17 Capítulos</p>
+            </div>
+          </div>
+          <div class="sinopsis-serie">
+            <p>
+              Narra la historia de Walter White (<a href="">Bryan Cranston</a>),
+              un profesor de química con problemas económicos a quien le
+              diagnostican un cáncer de pulmón inoperable. Para pagar su
+              tratamiento y asegurar el futuro económico de su familia, comienza
+              a cocinar y vender metanfetamina junto con Jesse Pikman (<a
+                href=""
+                >Aaron Paul</a
+              >), un antiguo alumno suyo. La serie, ambientada y producida en
+              Albuqerque, Nuevo México. Se caracteriza por sus escenarios
+              desérticos y por la tendencia en la historia de poner a sus
+              personajes en situaciones que aparentemente no tienen salida, lo
+              que llevó a que su creador la describa como un wéstern
+              contemporáneo.
+            </p>
+          </div>
         </div>
-      <!-- Separación -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="4"
-        viewBox="0 0 1919 4"
-        fill="none"
-        class="linea-separador"
-      >
-        <path
-          d="M0 2H1920"
-          stroke="url(#paint0_linear_44_85_2)"
-          stroke-width="3"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_44_85_2"
-            x1="986"
-            y1="2.00193"
-            x2="911"
-            y2="2.0008"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#71DF7C" />
-            <stop offset="1" stop-color="white" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </section>
+      </section>
+    </div>
 
     <!-- Pie de pagina (footer) -->
     <footer>

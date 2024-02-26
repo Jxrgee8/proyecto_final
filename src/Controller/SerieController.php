@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\GeneroRepository;
 use App\Repository\ListaRepository;
-use App\Repository\PlataformaRepository;
 use App\Repository\SerieRepository;
 use App\Repository\StreamingRepository;
 use App\Repository\UsuarioRepository;
