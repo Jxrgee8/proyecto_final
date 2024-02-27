@@ -41,6 +41,7 @@ security:
     access_control:
         # require ROLE_ADMIN for /admin* ( $this->denyAccessUnlessGranted('ROLE_ADMIN'); )
         - { path: '^/admin', roles: ROLE_ADMIN }
+        - { path: ^/manager, roles: ROLE_MANAGER }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         # TODO: Evitar acceso a ciertas páginas de usuarios "invitados"
         # - { path: ^/profile, roles: ROLE_USER }
