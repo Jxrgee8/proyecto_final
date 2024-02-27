@@ -15,7 +15,7 @@ class HomeController extends AbstractController
 
         $array_series = $serieRepository->findAll();
 
-        return $this->render('home/home.html.twig', [
+        return $this->render('page/home/home.html.twig', [
             'array_series' => $array_series,
             'controller_name' => 'HomeController',
         ]);

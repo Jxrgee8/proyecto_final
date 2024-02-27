@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
 {% endblock %}
 
-{% block title %}Todas las series{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block body %}
     <!-- NAVBAR: -->
@@ -107,13 +107,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="{{ path('home') }}">Inicio</a>
+              <a class="nav-link activo" aria-current="page" href="{{ path('home') }}">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('perfil') }}">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href=""
+              <a class="nav-link" href="{{ path('seguimiento') }}"
                 >Lista de Seguimiento</a
               >
             </li>
@@ -136,10 +136,28 @@
 
     <!-- SECCIÓN VIENDO: -->
     <section class="contenedor-pagina">
-      <h1 class="titulo-pagina">Show All Series:</h1>
+      <h1 class="titulo-pagina">En progreso...</h1>
       <div class="flex-container viendo-container">
 
         <!-- TODO: where lista = series_viendo -->
+        {% for serie in array_series %}
+        <div>
+          <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
+            <img
+                src="{{ asset(serie.posterSrc) }}"
+                class="card-img-top"
+                alt="..."
+            />
+          </a>
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <h1 class="titulo-pagina">Empezar a ver...</h1>
+      <div class="flex-container por-ver-container">
+
+        <!-- TODO: where lista = series_por_ver -->
         {% for serie in array_series %}
         <div>
           <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">

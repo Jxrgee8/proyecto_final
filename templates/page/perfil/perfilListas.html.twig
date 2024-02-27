@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('styles/styles.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('styles/perfil.css') }}">
 {% endblock %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Perfil{% endblock %}
 
 {% block body %}
     <!-- NAVBAR: -->
@@ -107,13 +107,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link activo" aria-current="page" href="{{ path('home') }}">Inicio</a>
+              <a class="nav-link" href="{{ path('home') }}">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Perfil</a>
+              <a class="nav-link activo" aria-current="page" href="{{ path('perfil') }}">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href=""
+              <a class="nav-link" href="{{ path('seguimiento') }}"
                 >Lista de Seguimiento</a
               >
             </li>
@@ -133,45 +133,69 @@
         />
       </div>
     </nav>
+    <!-- SECCIÓN: -->
+    <div class="flex-container">
+      <aside class="aside-perfil">
+        <div class="flex-container-stats">
+          <img src="{{ asset('img/monke-pfp.png') }}" alt="Foto perfil" />
+          <p class="nombre-usuario"><i>Nombre Usuario</i></p>
 
-    <!-- SECCIÓN VIENDO: -->
-    <section class="contenedor-pagina">
-      <h1 class="titulo-pagina">En progreso...</h1>
-      <div class="flex-container viendo-container">
-
-        <!-- TODO: where lista = series_viendo -->
-        {% for serie in array_series %}
-        <div>
-          <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
-            <img
-                src="{{ asset(serie.posterSrc) }}"
-                class="card-img-top"
-                alt="..."
-            />
-          </a>
+          <div class="info-basica">
+            <div>
+              <!-- TODO: enlace a lista -->
+              <p class="titulo-info">Series Vistas</p>
+              <p class="numero-series">18</p>
+            </div>
+            <div>
+              <!-- TODO: enlace a lista -->
+              <p class="titulo-info">Series por ver</p>
+              <p class="numero-series">24</p>
+            </div>
+            <div>
+              <!-- TODO: enlace a lista -->
+              <p class="titulo-info">Favoritos</p>
+              <p class="numero-series">6</p>
+            </div>
+            <div>
+              <p class="titulo-info">Géneros más vistos</p>
+              <!-- TOP 4 GÉNEROS: -->
+              <ul>
+                <li>Suspense</li>
+                <li>Acción</li>
+                <li>Drama</li>
+                <li>Terror</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        {% endfor %}
+      </aside>
+      <section class="section-perfil">
+        <div class="flex-container-listas">
+          <div class="contenedor-listas">
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_viendo'}) }}"><p class="titulo-lista">Series Viendo</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_por_ver'}) }}"><p class="titulo-lista">Series Por Ver</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_vistas'}) }}"><p class="titulo-lista">Series Vistas</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_favoritas'}) }}"><p class="titulo-lista">Favoritos</p></a>
+          </div>
+          <!-- TODO: Editar lista-container según el estado de la serie: -->
+          <div class="flex-container-series visto-container">
+          
+            <!-- TODO: where lista = series_viendo -->
+            {% for serie in array_series %}
+            <div>
+              <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
+                <img
+                    src="{{ asset(serie.posterSrc) }}"
+                    class="card-img-top"
+                    alt="..."
+                />
+              </a>
+            </div>
+            {% endfor %}
 
-      </div>
-
-      <h1 class="titulo-pagina">Empezar a ver...</h1>
-      <div class="flex-container por-ver-container">
-
-        <!-- TODO: where lista = series_por_ver -->
-        {% for serie in array_series %}
-        <div>
-          <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
-            <img
-                src="{{ asset(serie.posterSrc) }}"
-                class="card-img-top"
-                alt="..."
-            />
-          </a>
         </div>
-        {% endfor %}
-
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- Pie de pagina (footer) -->
     <footer>
