@@ -1,3 +1,4 @@
+import './bootstrap.js';
 /** Función para esconder la foto de perfil al hacer pequeña la pantalla: */
 function hidePfp() {
   var pfp = document.getElementById("user-pfp");

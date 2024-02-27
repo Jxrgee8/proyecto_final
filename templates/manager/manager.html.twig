@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Series vistas por mes:</h2><br>
+    <div style="height: 300px;">
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
