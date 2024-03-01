@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SerieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SerieRepository::class)]
@@ -30,21 +31,28 @@ class Serie
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $poster_src = null;
 
-    #[ORM\ManyToMany(targetEntity: Lista::class, inversedBy: 'serie')]
-    private Collection $lista;
-
     #[ORM\ManyToMany(targetEntity: Genero::class, mappedBy: 'serie')]
     private Collection $genero;
 
     #[ORM\ManyToMany(targetEntity: Streaming::class, mappedBy: 'serie')]
     private Collection $streamings;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
+
+    #[ORM\ManyToMany(targetEntity: Director::class, mappedBy: 'serie')]
+    private Collection $director;
+
+    #[ORM\OneToMany(mappedBy: 'serie', targetEntity: SerieLista::class)]
+    private Collection $serieLista;
+
     public function __construct()
     {
         $this->temporada = new ArrayCollection();
-        $this->lista = new ArrayCollection();
         $this->genero = new ArrayCollection();
         $this->streamings = new ArrayCollection();
+        $this->director = new ArrayCollection();
+        $this->serieLista = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,31 +139,6 @@ class Serie
     }
 
     /**
-     * @return Collection<int, Lista>
-     */
-    public function getLista(): Collection
-    {
-        return $this->lista;
-    }
-
-    public function addLista(Lista $lista): static
-    {
-        if (!$this->lista->contains($lista)) {
-            $this->lista->add($lista);
-        }
-
-        return $this;
-    }
-
-    public function removeLista(Lista $lista): static
-    {
-        $this->lista->removeElement($lista);
-
-        return $this;
-
-    }
-
-    /**
      * @return Collection<int, Genero>
      */
     public function getGenero(): Collection
@@ -214,5 +197,72 @@ class Serie
         return $this;
     }
 
-    
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Director>
+     */
+    public function getDirector(): Collection
+    {
+        return $this->director;
+    }
+
+    public function addDirector(Director $director): static
+    {
+        if (!$this->director->contains($director)) {
+            $this->director->add($director);
+            $director->addSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDirector(Director $director): static
+    {
+        if ($this->director->removeElement($director)) {
+            $director->removeSerie($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SerieLista>
+     */
+    public function getSerieLista(): Collection
+    {
+        return $this->serieLista;
+    }
+
+    public function addSerieListum(SerieLista $serieListum): static
+    {
+        if (!$this->serieLista->contains($serieListum)) {
+            $this->serieLista->add($serieListum);
+            $serieListum->setSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSerieListum(SerieLista $serieListum): static
+    {
+        if ($this->serieLista->removeElement($serieListum)) {
+            // set the owning side to null (unless already changed)
+            if ($serieListum->getSerie() === $this) {
+                $serieListum->setSerie(null);
+            }
+        }
+
+        return $this;
+    }
 }

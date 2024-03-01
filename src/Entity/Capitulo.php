@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CapituloRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CapituloRepository::class)]
@@ -19,6 +20,9 @@ class Capitulo
     #[ORM\ManyToOne(inversedBy: 'capitulos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Temporada $Temporada = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     public function getId(): ?int
     {
@@ -45,6 +49,18 @@ class Capitulo
     public function setTemporada(?Temporada $Temporada): static
     {
         $this->Temporada = $Temporada;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
 
         return $this;
     }

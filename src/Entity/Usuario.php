@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UsuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +38,9 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Lista::class, cascade: ['remove'])]
     private Collection $listas;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     public function __construct()
     {
@@ -131,6 +135,18 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function getListas(): Collection
     {
         return $this->listas;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
     }
     
 }

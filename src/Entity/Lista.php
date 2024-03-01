@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ListaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ListaRepository::class)]
@@ -22,12 +23,15 @@ class Lista
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $usuario = null;
 
-    #[ORM\ManyToMany(targetEntity: Serie::class, mappedBy: 'lista')]
-    private Collection $serie;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
+
+    #[ORM\OneToMany(mappedBy: 'lista', targetEntity: SerieLista::class)]
+    private Collection $serieListas;
 
     public function __construct()
     {
-        $this->serie = new ArrayCollection();
+        $this->serieListas = new ArrayCollection();
     }
 
     /* // ?: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
@@ -68,28 +72,43 @@ class Lista
         return $this;
     }
 
-    /**
-     * @return Collection<int, Serie>
-     */
-    public function getSerie(): Collection
+    public function getFechaCreacion(): ?\DateTimeInterface
     {
-        return $this->serie;
+        return $this->fecha_creacion;
     }
 
-    public function addSerie(Serie $serie): static
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
     {
-        if (!$this->serie->contains($serie)) {
-            $this->serie->add($serie);
-            $serie->addLista($this);
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SerieLista>
+     */
+    public function getSerieListas(): Collection
+    {
+        return $this->serieListas;
+    }
+
+    public function addSerieLista(SerieLista $serieLista): static
+    {
+        if (!$this->serieListas->contains($serieLista)) {
+            $this->serieListas->add($serieLista);
+            $serieLista->setLista($this);
         }
 
         return $this;
     }
 
-    public function removeSerie(Serie $serie): static
+    public function removeSerieLista(SerieLista $serieLista): static
     {
-        if ($this->serie->removeElement($serie)) {
-            $serie->removeLista($this);
+        if ($this->serieListas->removeElement($serieLista)) {
+            // set the owning side to null (unless already changed)
+            if ($serieLista->getLista() === $this) {
+                $serieLista->setLista(null);
+            }
         }
 
         return $this;

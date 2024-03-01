@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\StreamingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StreamingRepository::class)]
@@ -23,6 +24,9 @@ class Streaming
 
     #[ORM\Column(length: 60, nullable: true)]
     private ?string $icono_src = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     public function __construct()
     {
@@ -83,6 +87,18 @@ class Streaming
     public function setIconoSrc(?string $icono_src): static
     {
         $this->icono_src = $icono_src;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
 
         return $this;
     }

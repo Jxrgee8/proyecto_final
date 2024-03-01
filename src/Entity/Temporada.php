@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TemporadaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TemporadaRepository::class)]
@@ -24,6 +25,9 @@ class Temporada
 
     #[ORM\OneToMany(mappedBy: 'Temporada', targetEntity: Capitulo::class)]
     private Collection $capitulo;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $fecha_creacion = null;
 
     public function __construct()
     {
@@ -89,9 +93,22 @@ class Temporada
         return $this;
     }
 
+    public function getFechaCreacion(): ?\DateTimeInterface
+    {
+        return $this->fecha_creacion;
+    }
+
+    public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
+    {
+        $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
     public function getTemporadaSerie() {
         return $this->getSerie()." - Temporada ".$this->getNumeroTemp();
     }
+    
 
     public function __toString(): string
     {

@@ -13,6 +13,8 @@ security:
         ROLE_ADMIN: ROLE_ADMIN, ROLE_USER
         ROLE_MANAGER: ROLE_MANAGER
         ROLE_USER: ROLE_USER
+    # TODO: Redirect a página de acceso denegado que de opción a cambiar de usuario (Logout -> Login)
+    access_denied_url: /login
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

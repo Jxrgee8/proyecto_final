@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Capitulo;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
@@ -21,6 +22,7 @@ class CapituloCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             NumberField::new('numero_cap')->setLabel('Número de Capítulo'),
             AssociationField::new('Temporada'),
+            DateTimeField::new('fecha_creacion')
         ];
     }
 }
