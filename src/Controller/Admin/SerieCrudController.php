@@ -6,6 +6,7 @@ use App\Entity\Serie;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -30,6 +31,7 @@ class SerieCrudController extends AbstractCrudController
             ArrayField::new('genero')->hideOnForm(),
             AssociationField::new('streamings')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false),
             ArrayField::new('streamings')->hideOnForm(),
+            DateTimeField::new('fecha_creacion')
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\Usuario;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -42,7 +43,8 @@ class UsuarioCrudController extends AbstractCrudController
                 'Rol de Admin' => 'ROLE_ADMIN',
                 'Rol de Manager' => 'ROLE_MANAGER',
                 'Rol de Usuario' => 'ROLE_USER'
-            ])->onlyOnIndex()
+            ])->onlyOnIndex(),
+            DateTimeField::new('fecha_creacion')
         ];
     }
 }
