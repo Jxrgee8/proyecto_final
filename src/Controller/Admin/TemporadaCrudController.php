@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Temporada;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 
@@ -22,7 +22,7 @@ class TemporadaCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             NumberField::new('numero_temp')->setLabel('Número de Temporada'),
             AssociationField::new('Serie'),
-            DateTimeField::new('fecha_creacion')
+            DateField::new('fecha_creacion')
         ];
     }
 }

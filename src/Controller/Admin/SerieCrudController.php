@@ -6,7 +6,7 @@ use App\Entity\Serie;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -27,11 +27,13 @@ class SerieCrudController extends AbstractCrudController
             NumberField::new('fecha_lanzamiento'),
             TextEditorField::new('sinopsis'),
             TextField::new('poster_src')->setHelp("img/posters/SERIE_POSTER.jpg")->setLabel("Póster de Serie"),
-            AssociationField::new('genero')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false),
+            AssociationField::new('genero')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false)->onlyOnForms(),
             ArrayField::new('genero')->hideOnForm(),
-            AssociationField::new('streamings')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false),
+            AssociationField::new('streamings')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false)->onlyOnForms(),
             ArrayField::new('streamings')->hideOnForm(),
-            DateTimeField::new('fecha_creacion')
+            AssociationField::new('director')->setFormTypeOptions(['multiple' => true])->setFormTypeOption('by_reference', false)->onlyOnForms(),
+            ArrayField::new('director')->hideOnForm(),
+            DateField::new('fecha_creacion')
         ];
     }
 }

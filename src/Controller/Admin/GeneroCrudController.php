@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Genero;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -20,7 +20,7 @@ class GeneroCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
-            DateTimeField::new('fecha_creacion')
+            DateField::new('fecha_creacion')
         ];
     }
 }

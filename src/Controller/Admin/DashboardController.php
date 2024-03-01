@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Capitulo;
+use App\Entity\Director;
 use App\Entity\Genero;
 use App\Entity\Serie;
 use App\Entity\Streaming;
@@ -56,6 +57,7 @@ class DashboardController extends AbstractDashboardController
        yield MenuItem::section('Información de Serie');
        yield MenuItem::linkToCrud('Género', 'fa fa-tags', Genero::class);
        yield MenuItem::linkToCrud('Streaming', 'fa fa-play-circle-o', Streaming::class);
+       yield MenuItem::linkToCrud('Director', 'fa fa-address-card-o', Director::class);
    }
 
 }
