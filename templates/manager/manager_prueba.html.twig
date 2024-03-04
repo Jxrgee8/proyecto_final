@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Prueba</h1>
+    {% for genero in array_generos %}
+            <ul>
+                <li>
+                {{ genero.nombre }}
+                {{ genero.num_generos }}
+                </li>
+            </ul>
+    {% endfor %}
+{% endblock %}
