@@ -1,40 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% for genero in array_generos %}
+    <ul>
+        <li>{{genero.nombre}} " - " {{genero.num_generos}}</li>
+    </ul>
+    {% endfor %}
     <p style="text-align:center;font-weight:bold;font-size:22px;margin-top:5vh">Géneros Más Comunes:</p><br>
     <div style="height: 500px;border: 1px solid #000;padding: 4vh;margin: 4vh;border-radius: 5px">
-{#
-    {% for genero in array_generos %}
-        $labels = [genero.nombre]
-        $data = [genero.num_generos]
-    {% endfor %}
-
-    {{
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
-        $chart->setData([
-            'labels' => $labels,
-            'datasets' => [
-                [
-                    'label' => 'Géneros Más Comunes',
-                    'barPercentage' => 0.5,
-                    'barThickness' => 40,
-                    'data' => $data,
-                    'backgroundColor' => [
-                        'rgba(153, 102, 255, 0.2)',
-                      ],
-                      'borderColor' => [
-                        'rgb(153, 102, 255)',
-                      ],
-                    'borderWidth' => 1,
-                ]
-            ],
-        ]);
-        $chart->setOptions([
-            'maintainAspectRatio' => false,
-        ]);
-    }}
-#}
         {{ render_chart(chart) }}
-
     </div>
 {% endblock %}

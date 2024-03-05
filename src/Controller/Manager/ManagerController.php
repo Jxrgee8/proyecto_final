@@ -31,8 +31,8 @@ class ManagerController extends AbstractController
 
         // ver: https://dev.to/mis0u/symfony-ux-and-chartjs-ff4
         // ver: https://dev.to/qferrer/creating-a-covid-19-data-visualization-with-symfony-ux-chart-js-2khj#render-chart
-        $labels = [];
-        $data = [];
+        $labels = ['Genero', 'Genero', 'Género'];
+        $data = [10, 10, 10];
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
@@ -60,6 +60,7 @@ class ManagerController extends AbstractController
         return $this->render('manager/manager.html.twig', [
             'package' => $package,
             'chart' => $chart,
+            'array_generos' => $array_generos
         ]);
     }
 
