@@ -150,6 +150,51 @@ class SerieController extends AbstractController
         ]);
     }
 
+    private function statsPerfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository) {
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        // Ids de listas a buscar:
+        $lista_vistas = $listaRepository->listaSeriesVistas($currentUserID);
+        $lista_por_ver = $listaRepository->listaSeriesPorVer($currentUserID);
+        $lista_favoritas = $listaRepository->listaSeriesFavoitas($currentUserID);
+
+        // Array Series en cada Lista
+        $series_vistas = $serieListaRepository->getSerieIdFromLista($lista_vistas->getId());;
+        $series_por_ver = $serieListaRepository->getSerieIdFromLista($lista_por_ver->getId());
+        $series_favoritas = $serieListaRepository->getSerieIdFromLista($lista_favoritas->getId());
+
+        // Guardar número de series en cada lista:
+        $array_series_vistas = []; 
+        $array_series_por_ver = []; 
+        $array_series_favoritas = []; 
+
+        //VISTAS:
+            foreach ($series_vistas as $id_serie_vista) {
+                $array_series_vistas[] = $id_serie_vista['serie_id'];
+            }
+
+        //POR VER:
+            foreach ($series_por_ver as $id_serie_por_ver) {
+                $array_series_por_ver[] = $id_serie_por_ver['serie_id'];
+            }
+
+        //FAVORITAS:
+            foreach ($series_favoritas as $id_serie_favorita) {
+                $array_series_favoritas[] = $id_serie_favorita['serie_id'];
+            }      
+
+        // Contador de series para el perfil:
+        $num_por_ver = count($array_series_por_ver);
+        $num_vistas = count($array_series_vistas);
+        $num_favoritas = count($array_series_favoritas);
+
+        $array_stats = [$num_vistas, $num_por_ver, $num_favoritas];
+
+        return $array_stats;
+    }
+
     /**
      * Método que permitirá navegar entre las distintas listas del usuario (que aparecen en el perfil).
      * Dependiendo de la lista seleccionada por el usuario se mostrarán unas series u otras.
@@ -164,14 +209,9 @@ class SerieController extends AbstractController
         $currentUserID = $currentUser->getId();
 
         $nombre_usuario = $currentUser->getUsername(); //nombre del usuario
+        $array_series = [];
         
-        $array_series = []; //array de series para pasar al twig
-
-        // Contador de series para el perfil:
-        $num_viendo = 0;
-        $num_por_ver = 0;
-        $num_vistas = 0;
-        $num_favoritas = 0;
+        $array_stats = $this->statsPerfil($usuarioRepository, $listaRepository, $serieRepository, $serieListaRepository);
 
         // Dependiendo de la lista activa se pasará la una clase para subrayar el título de dicha lista:
         $activo_viendo = "";
@@ -282,6 +322,7 @@ class SerieController extends AbstractController
         return $this->render('page/perfil/perfilListas.html.twig', [
             'nombre_usuario' => $nombre_usuario,
             'array_series' => $array_series,
+            'stats' => $array_stats,
             'activo_s_viendo' => $activo_viendo,
             'activo_s_por_ver' => $activo_por_ver,
             'activo_s_vistas' => $activo_vistas,
