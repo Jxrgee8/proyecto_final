@@ -25,7 +25,7 @@ class SerieRepository extends ServiceEntityRepository
     public function countGeneros(): ?array {
         $conn = $this->getEntityManager()->getConnection();
         $sql = "
-            SELECT G.nombre, COUNT(GS.genero_id) AS num_generos FROM genero G 
+            SELECT G.nombre, COUNT(GS.genero_id) AS num FROM genero G 
             INNER JOIN genero_serie GS ON G.id = GS.genero_id 
             INNER JOIN serie S ON S.id = GS.serie_id 
             GROUP BY GS.genero_id
