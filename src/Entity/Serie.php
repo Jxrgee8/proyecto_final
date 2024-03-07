@@ -28,7 +28,7 @@ class Serie
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $sinopsis = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $poster_src = null;
 
     #[ORM\ManyToMany(targetEntity: Genero::class, mappedBy: 'serie')]

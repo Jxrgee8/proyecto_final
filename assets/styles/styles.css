@@ -57,14 +57,31 @@ p {
 }
 
 .navbar-brand {
-  margin-left: 10%;
+  margin-left: 12vh;
+}
+
+.logo-pagina {
+  width: 13vh;
+  width: 13vh;
 }
 
 .user-pfp {
   border-radius: 50%;
-  margin-right: 10%;
-  height: 50px;
-  width: 50px;
+  margin-right: 12vh;
+  height: 6vh;
+  width: 6vh;
+}
+
+.dropdown-menu[data-bs-popper] {
+  top: 100%;
+  left: -7vh;
+  margin-top: 1vh;
+}
+
+.dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
 }
 
 .collapse {

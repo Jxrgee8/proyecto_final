@@ -22,6 +22,7 @@ class ListaController extends AbstractController
         $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
 
         $serie = $serieRepository->find($id);
+        // TODO:
         $listaUsuario->addSerie($serie);
 
         return new Response('Añadida serie: '.$serie->getNombre());

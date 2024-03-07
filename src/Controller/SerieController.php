@@ -126,7 +126,7 @@ class SerieController extends AbstractController
 
         $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
 
-        $array_series = $listaUsuario->getSerie();
+        $array_series = $listaUsuario->getSerieListas();
 
         return $this->render('page/perfil/perfil.html.twig', [
             'array_series' => $array_series
@@ -150,22 +150,22 @@ class SerieController extends AbstractController
 
         if ($tipo_lista == "series_viendo") {
             $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
-            $array_series = $listaUsuario->getSerie();
+            $array_series = $listaUsuario->getSerieListas();
         }
 
         if ($tipo_lista == "series_por_ver") {
             $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
-            $array_series = $listaUsuario->getSerie();
+            $array_series = $listaUsuario->getSerieListas();
         }
 
         if ($tipo_lista == "series_vistas") {
             $listaUsuario = $listaRepository->listaSeriesVistas($currentUserID);
-            $array_series = $listaUsuario->getSerie();
+            $array_series = $listaUsuario->getSerieListas();
         }
 
         if ($tipo_lista == "series_favoritas") {
             $listaUsuario = $listaRepository->listaSeriesFavoitas($currentUserID);
-            $array_series = $listaUsuario->getSerie();
+            $array_series = $listaUsuario->getSerieListas();
         }
 
         return $this->render('page/perfil/perfilListas.html.twig', [
@@ -187,7 +187,7 @@ class SerieController extends AbstractController
 
         $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
 
-        $array_series = $listaUsuario->getSerie();
+        $array_series = $listaUsuario->getSerieListas();
 
         return $this->render('page/seguimiento/seguimiento.html.twig', [
             'array_series' => $array_series

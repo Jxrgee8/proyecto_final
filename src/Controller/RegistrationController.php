@@ -57,18 +57,22 @@ class RegistrationController extends AbstractController
 
             $lista1->setTipoLista('series_viendo');
             $lista1->setUsuario($usuario);
+            $lista1->setFechaCreacion(new \DateTime());
             $entityManager->persist($lista1);
 
             $lista2->setTipoLista('series_por_ver');
             $lista2->setUsuario($usuario);
+            $lista2->setFechaCreacion(new \DateTime());
             $entityManager->persist($lista2);
 
             $lista3->setTipoLista('series_vistas');
             $lista3->setUsuario($usuario);
+            $lista3->setFechaCreacion(new \DateTime());
             $entityManager->persist($lista3);
 
             $lista4->setTipoLista('series_favoritas');
             $lista4->setUsuario($usuario);
+            $lista4->setFechaCreacion(new \DateTime());
             $entityManager->persist($lista4);
 
             $entityManager->flush();
