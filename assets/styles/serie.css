@@ -173,6 +173,7 @@
     width: 90%;
     border: 2px solid #fff;
     border-radius: 3px;
+    margin-bottom: 8vh;
   }
   
   .flex-container-temporadas .lista-temporadas .temporada {
@@ -187,17 +188,20 @@
     margin: auto;
   }
   
-  .flex-container-temporadas .lista-temporadas .temporada.last {
-    border-bottom: 0;
+  .flex-container-temporadas .titulo-sinopsis {
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; /* ! Cambiar fuente */
   }
-  
+
   .flex-container-temporadas .sinopsis-serie {
     background-color: var(--bg-color-info);
     width: 90%;
     border: 2px solid #fff;
     border-radius: 3px;
     padding: 2vh;
-    margin-top: 8vh;
+    border-bottom: 4px solid #fff;
   }
   
   @media screen and (max-width: 1024px) {

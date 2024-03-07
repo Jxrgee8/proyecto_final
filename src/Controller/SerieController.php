@@ -32,10 +32,22 @@ class SerieController extends AbstractController
             );
         }
 
+        $array_temporada = $serie->getTemporadas();
+
+        foreach ($array_temporada as $temporada) {
+            $capitulos = count($temporada->getCapitulo());
+        }
+
         return $this->render('serie/views/showSerie.html.twig', [
             'id_serie' => $serie->getId(),
             'nombre_serie' => $serie->getNombre(),
-            'poster_serie' => $serie->getPosterSrc()
+            'poster_serie' => $serie->getPosterSrc(),
+            'streaming_serie' => $serie->getStreamings(),
+            'genero_serie' => $serie->getGenero(),
+            'director_serie' => $serie->getDirector(),
+            'sinopsis_serie' => $serie->getSinopsis(),
+            'temporada_serie' => $serie->getTemporadas(),
+            'capitulos' => $capitulos
         ]);
     }
 

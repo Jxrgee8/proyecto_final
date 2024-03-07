@@ -90,7 +90,6 @@
           <img
             src="{{ asset(poster_serie) }}"
             alt={{ nombre_serie }}
-            title={{ nombre_serie }}
           />
           <!-- TODO: Añadir/Eliminar de listas dependiendo del estado: -->
           <!-- TODO: Hacer excluyente estado visto y por ver: -->
@@ -100,31 +99,22 @@
             <i class="bi bi-heart icono-favorito" id="icono-favorito"></i>
           </div>
           <div class="info-basica">
-          <!-- TODO: getPlataforma de la base de datos y asociar icono: -->
             <div>
               <p class="titulo-info">Plataformas</p>
-              <img
-                src="{{ asset('img/icons/netflix-icon.svg') }}"
-                alt="Netflix"
-                title="Netflix"
-              />
-              <img
-                src="{{ asset('img/icons/prime-video-icon.svg') }}"
-                alt="Amazon Prime Video"
-                title="Amazon Prime Video"
-              />
-              <img
-                src="{{ asset('img/icons/hbo-max-icon.svg') }}"
-                alt="HBO Max"
-                title="HBO Max"
-              />
+              {% for streaming in streaming_serie %}
+                <img
+                  src="{{ asset(streaming.iconoSrc) }}"
+                  alt="{{ streaming.nombre|capitalize }}"
+                  title="{{ streaming.nombre|capitalize }}"
+                />
+              {% endfor %}
             </div>
             <div>
               <p class="titulo-info">Géneros</p>
               <ul>
-                <li>Suspense</li>
-                <li>Drama</li>
-                <li>Acción</li>
+                {% for genero in genero_serie %}
+                  <li>{{ genero.nombre|capitalize }}</li>
+                {% endfor %}
               </ul>
             </div>
             <div>
@@ -137,10 +127,9 @@
             <div>
               <p class="titulo-info">Director(es)</p>
               <ul>
-                <!-- TODO: posible enlace a directores (wikipedia) -->
-                <li>Vince Gilligan</li>
-                <li>Michael Slovis</li>
-                <li>Colin Bucksey</li>
+                {% for director in director_serie %}
+                  <li>{{ director.nombre }}</li>
+                {% endfor %}
               </ul>
             </div>
           </div>
@@ -150,42 +139,17 @@
         <div class="flex-container-temporadas">
           <p class="titulo-temporadas">Temporadas</p>
           <div class="lista-temporadas">
+            {% for temporada in temporada_serie %}
             <div class="temporada">
-              <p>Temporada 1</p>
-              <p>7 Capítulos</p>
+              <p>Temporada {{ temporada.numeroTemp }}</p>
+              <p>{{ capitulos }} Capítulo/s</p>
             </div>
-            <div class="temporada">
-              <p>Temporada 2</p>
-              <p>13 Capítulos</p>
-            </div>
-            <div class="temporada">
-              <p>Temporada 3</p>
-              <p>13 Capítulos</p>
-            </div>
-            <div class="temporada">
-              <p>Temporada 4</p>
-              <p>13 Capítulos</p>
-            </div>
-            <div class="temporada last">
-              <p>Temporada 5</p>
-              <p>17 Capítulos</p>
-            </div>
+            {% endfor %}
           </div>
+          <p class="titulo-sinopsis">Sinopsis</p>
           <div class="sinopsis-serie">
             <p>
-              Narra la historia de Walter White (<a href="">Bryan Cranston</a>),
-              un profesor de química con problemas económicos a quien le
-              diagnostican un cáncer de pulmón inoperable. Para pagar su
-              tratamiento y asegurar el futuro económico de su familia, comienza
-              a cocinar y vender metanfetamina junto con Jesse Pikman (<a
-                href=""
-                >Aaron Paul</a
-              >), un antiguo alumno suyo. La serie, ambientada y producida en
-              Albuqerque, Nuevo México. Se caracteriza por sus escenarios
-              desérticos y por la tendencia en la historia de poner a sus
-              personajes en situaciones que aparentemente no tienen salida, lo
-              que llevó a que su creador la describa como un wéstern
-              contemporáneo.
+              {{ sinopsis_serie }}
             </p>
           </div>
         </div>
