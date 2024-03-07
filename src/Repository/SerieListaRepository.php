@@ -21,28 +21,19 @@ class SerieListaRepository extends ServiceEntityRepository
         parent::__construct($registry, SerieLista::class);
     }
 
-//    /**
-//     * @return SerieLista[] Returns an array of SerieLista objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getSerieIdFromLista($lista_id): ?array
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
-//    public function findOneBySomeField($value): ?SerieLista
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $sql = '
+            SELECT serie_id FROM serie_lista sl
+            WHERE sl.lista_id = :lista_id
+            ';
+
+        $resultSet = $conn->executeQuery($sql, ['lista_id' => $lista_id]);
+        
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
 }

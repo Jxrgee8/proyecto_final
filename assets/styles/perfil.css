@@ -124,7 +124,13 @@
     font-weight: bold;
   }
   
-  .flex-container-listas .titulo-lista.activo {
+  .flex-container-listas .titulo-lista.activo_s_vistas {
+    border-bottom: 3px solid #fff;
+  }.flex-container-listas .titulo-lista.activo_s_viendo {
+    border-bottom: 3px solid #fff;
+  }.flex-container-listas .titulo-lista.activo_s_por_ver {
+    border-bottom: 3px solid #fff;
+  }.flex-container-listas .titulo-lista.activo_s_favoritas {
     border-bottom: 3px solid #fff;
   }
   

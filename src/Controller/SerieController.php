@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\GeneroRepository;
 use App\Repository\ListaRepository;
+use App\Repository\SerieListaRepository;
 use App\Repository\SerieRepository;
 use App\Repository\StreamingRepository;
 use App\Repository\UsuarioRepository;
@@ -113,20 +114,36 @@ class SerieController extends AbstractController
 
 
     /** ######### MÉTODOS DE PERFIL: ######### */
-
-
     /**
      * Método que mostrará la página de perfil del usuario actual. Por defecto mostrará el listado de las series que está viendo.
      */
     #[Route('/perfil', name: 'perfil')]
-    public function perfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository) {
+    public function perfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieListaRepository $serieListaRepository, SerieRepository $serieRepository) {
+        // Obtener el ID del usuario conectado:
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
         $currentUserID = $currentUser->getId();
 
+        // Buscar la lista "serie_viendo" del usuario conectado: 
         $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
 
-        $array_series = $listaUsuario->getSerieListas();
+        // Obtener el ID de dicha lista ("series_viendo"):
+        $currentListaID = $listaUsuario->getId(); 
+
+        // Obtener un array con todas las series de la lista con el ID anterior (SerieLista):
+        $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+        $array_id_series = [];
+
+        foreach ($series_lista as $id_serie) {
+            $array_id_series[] = $id_serie['serie_id'];
+        }
+
+        $array_series = [];
+
+        foreach ($array_id_series as $id_serie) {
+            $array_series[] = $serieRepository->find($id_serie);
+        }
 
         return $this->render('page/perfil/perfil.html.twig', [
             'array_series' => $array_series
@@ -137,39 +154,138 @@ class SerieController extends AbstractController
      * Método que permitirá navegar entre las distintas listas del usuario (que aparecen en el perfil).
      * Dependiendo de la lista seleccionada por el usuario se mostrarán unas series u otras.
      * tipo_lista: tipo de lista a mostrar (series_viendo | series_por_ver | series_vistas | series_favoritas)
+     * Se usará la misma funcionalidad que en el método /perfil
      */
     #[Route('/perfil/{tipo_lista}', name: 'perfil_browse_lista')]
-    public function seriesPorVer(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, string $tipo_lista): Response
+    public function seriesPorVer(UsuarioRepository $usuarioRepository, string $tipo_lista, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository): Response
     {
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
         $currentUserID = $currentUser->getId();
 
-        $array_series = "";
-        $listaUsuario = "";
+        $nombre_usuario = $currentUser->getUsername(); //nombre del usuario
+        
+        $array_series = []; //array de series para pasar al twig
 
+        // Contador de series para el perfil:
+        $num_viendo = 0;
+        $num_por_ver = 0;
+        $num_vistas = 0;
+        $num_favoritas = 0;
+
+        // Dependiendo de la lista activa se pasará la una clase para subrayar el título de dicha lista:
+        $activo_viendo = "";
+        $activo_por_ver = "";
+        $activo_vistas = "";
+        $activo_favoritas = "";
+
+        // Obtener SERIES VIENDO:
         if ($tipo_lista == "series_viendo") {
+            // Se selecciona el tipo de lista a buscar ("series_viendo"):
             $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
-            $array_series = $listaUsuario->getSerieListas();
+
+            // Obtener el ID de dicha lista ("series_viendo"):
+            $currentListaID = $listaUsuario->getId(); 
+
+            // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
+            $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+            // Se guardan los ids de las series obtenidas en un array seleccionando esa clave-valor (array['serie_id']):
+            $array_id_series = [];
+            foreach ($series_lista as $id_serie) {
+                $array_id_series[] = $id_serie['serie_id'];
+            }
+
+            // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+            foreach ($array_id_series as $id_serie) {
+                $array_series[] = $serieRepository->find($id_serie);
+            }
+
+            $activo_viendo = "activo_s_viendo";
         }
 
+        // Obtener SERIES POR VER:
         if ($tipo_lista == "series_por_ver") {
+            // Se selecciona el tipo de lista a buscar ("series_por_ver"):
             $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
-            $array_series = $listaUsuario->getSerieListas();
+
+            // Obtener el ID de dicha lista ("series_por_ver"):
+            $currentListaID = $listaUsuario->getId(); 
+
+            // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
+            $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+            // Se guardan los ids de las series obtenidas en un array seleccionando esa clave-valor (array['serie_id']):
+            $array_id_series = [];
+            foreach ($series_lista as $id_serie) {
+                $array_id_series[] = $id_serie['serie_id'];
+            }
+
+            // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+            foreach ($array_id_series as $id_serie) {
+                $array_series[] = $serieRepository->find($id_serie);
+            }
+            
+            $activo_por_ver = "activo_s_por_ver";
         }
 
+        // Obtener SERIES VISTAS:
         if ($tipo_lista == "series_vistas") {
+            // Se selecciona el tipo de lista a buscar ("series_vistas"):
             $listaUsuario = $listaRepository->listaSeriesVistas($currentUserID);
-            $array_series = $listaUsuario->getSerieListas();
+
+            // Obtener el ID de dicha lista ("series_vistas"):
+            $currentListaID = $listaUsuario->getId(); 
+
+            // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
+            $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+            // Se guardan los ids de las series obtenidas en un array seleccionando esa clave-valor (array['serie_id']):
+            $array_id_series = [];
+            foreach ($series_lista as $id_serie) {
+                $array_id_series[] = $id_serie['serie_id'];
+            }
+
+            // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+            foreach ($array_id_series as $id_serie) {
+                $array_series[] = $serieRepository->find($id_serie);
+            }
+
+            $activo_vistas = "activo_s_vistas";
         }
 
+        // Obtener SERIES FAVORITAS:
         if ($tipo_lista == "series_favoritas") {
+            // Se selecciona el tipo de lista a buscar ("series_favoritas"):
             $listaUsuario = $listaRepository->listaSeriesFavoitas($currentUserID);
-            $array_series = $listaUsuario->getSerieListas();
+
+            // Obtener el ID de dicha lista ("series_favoritas"):
+            $currentListaID = $listaUsuario->getId(); 
+
+            // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
+            $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+            // Se guardan los ids de las series obtenidas en un array seleccionando esa clave-valor (array['serie_id']):
+            $array_id_series = [];
+            foreach ($series_lista as $id_serie) {
+                $array_id_series[] = $id_serie['serie_id'];
+            }
+
+            // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+            foreach ($array_id_series as $id_serie) {
+                $array_series[] = $serieRepository->find($id_serie);
+            }        
+
+            $activo_favoritas = "activo_s_favoritas";
         }
 
         return $this->render('page/perfil/perfilListas.html.twig', [
-            'array_series' => $array_series
+            'nombre_usuario' => $nombre_usuario,
+            'array_series' => $array_series,
+            'activo_s_viendo' => $activo_viendo,
+            'activo_s_por_ver' => $activo_por_ver,
+            'activo_s_vistas' => $activo_vistas,
+            'activo_s_favoritas' => $activo_favoritas,
         ]);
     }
 

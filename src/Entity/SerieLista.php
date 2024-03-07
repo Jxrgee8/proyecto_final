@@ -17,7 +17,7 @@ class SerieLista
     #[ORM\ManyToOne(inversedBy: 'serieLista')]
     private ?Serie $serie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'serieListas')]
+    #[ORM\ManyToOne(inversedBy: 'serieLista')]
     private ?Lista $lista = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

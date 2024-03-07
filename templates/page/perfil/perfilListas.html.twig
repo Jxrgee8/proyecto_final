@@ -85,7 +85,7 @@
       <aside class="aside-perfil">
         <div class="flex-container-stats">
           <img src="{{ asset('img/monke-pfp.png') }}" alt="Foto perfil" />
-          <p class="nombre-usuario"><i>Nombre Usuario</i></p>
+          <p class="nombre-usuario"><i>{{ nombre_usuario }}</i></p>
 
           <div class="info-basica">
             <div>
@@ -119,10 +119,10 @@
       <section class="section-perfil">
         <div class="flex-container-listas">
           <div class="contenedor-listas">
-            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_viendo'}) }}"><p class="titulo-lista">Series Viendo</p></a>
-            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_por_ver'}) }}"><p class="titulo-lista">Series Por Ver</p></a>
-            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_vistas'}) }}"><p class="titulo-lista">Series Vistas</p></a>
-            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_favoritas'}) }}"><p class="titulo-lista">Favoritos</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_viendo'}) }}"><p class="titulo-lista {{ activo_s_viendo }}">Series Viendo</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_por_ver'}) }}"><p class="titulo-lista {{ activo_s_por_ver }}">Series Por Ver</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_vistas'}) }}"><p class="titulo-lista {{ activo_s_vistas }}">Series Vistas</p></a>
+            <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_favoritas'}) }}"><p class="titulo-lista {{ activo_s_favoritas }}">Favoritos</p></a>
           </div>
           <!-- TODO: Editar lista-container según el estado de la serie: -->
           <div class="flex-container-series visto-container">

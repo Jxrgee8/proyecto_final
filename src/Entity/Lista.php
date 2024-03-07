@@ -27,11 +27,11 @@ class Lista
     private ?\DateTimeInterface $fecha_creacion = null;
 
     #[ORM\OneToMany(mappedBy: 'lista', targetEntity: SerieLista::class)]
-    private Collection $serieListas;
+    private Collection $serieLista;
 
     public function __construct()
     {
-        $this->serieListas = new ArrayCollection();
+        $this->serieLista = new ArrayCollection();
     }
 
     /* // ?: Usar setId() para generar un ID formado por ID_LISTA+ID_USUARIO
@@ -89,13 +89,13 @@ class Lista
      */
     public function getSerieListas(): Collection
     {
-        return $this->serieListas;
+        return $this->serieLista;
     }
 
     public function addSerieLista(SerieLista $serieLista): static
     {
-        if (!$this->serieListas->contains($serieLista)) {
-            $this->serieListas->add($serieLista);
+        if (!$this->serieLista->contains($serieLista)) {
+            $this->serieLista->add($serieLista);
             $serieLista->setLista($this);
         }
 
@@ -104,7 +104,7 @@ class Lista
 
     public function removeSerieLista(SerieLista $serieLista): static
     {
-        if ($this->serieListas->removeElement($serieLista)) {
+        if ($this->serieLista->removeElement($serieLista)) {
             // set the owning side to null (unless already changed)
             if ($serieLista->getLista() === $this) {
                 $serieLista->setLista(null);
