@@ -15,12 +15,20 @@ class DirectorCrudController extends AbstractCrudController
         return Director::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $director = new Director();
+        $director->setFechaCreacion(new \DateTime());
+
+        return $director;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }

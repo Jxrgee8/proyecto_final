@@ -20,6 +20,14 @@ class UsuarioCrudController extends AbstractCrudController
         return Usuario::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $usuario = new Usuario();
+        $usuario->setFechaCreacion(new \DateTime());
+
+        return $usuario;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -44,7 +52,7 @@ class UsuarioCrudController extends AbstractCrudController
                 'Rol de Manager' => 'ROLE_MANAGER',
                 'Rol de Usuario' => 'ROLE_USER'
             ])->onlyOnIndex(),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }

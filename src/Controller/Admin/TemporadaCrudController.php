@@ -16,13 +16,21 @@ class TemporadaCrudController extends AbstractCrudController
         return Temporada::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $temporada = new Temporada();
+        $temporada->setFechaCreacion(new \DateTime());
+
+        return $temporada;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             NumberField::new('numero_temp')->setLabel('Número de Temporada'),
             AssociationField::new('Serie'),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }

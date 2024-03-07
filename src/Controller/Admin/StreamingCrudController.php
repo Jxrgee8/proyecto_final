@@ -15,13 +15,21 @@ class StreamingCrudController extends AbstractCrudController
         return Streaming::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $streaming = new Streaming();
+        $streaming->setFechaCreacion(new \DateTime());
+
+        return $streaming;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
             TextField::new('icono_src')->setHelp("img/icons/streaming-icon.svg")->setLabel("Icono de Plataforma"),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }

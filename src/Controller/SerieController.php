@@ -128,42 +128,6 @@ class SerieController extends AbstractController
 
 
     /** ######### MÉTODOS DE PERFIL: ######### */
-    /**
-     * Método que mostrará la página de perfil del usuario actual. Por defecto mostrará el listado de las series que está viendo.
-     */
-    #[Route('/perfil', name: 'perfil')]
-    public function perfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieListaRepository $serieListaRepository, SerieRepository $serieRepository) {
-        // Obtener el ID del usuario conectado:
-        $user = $this->getUser();
-        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
-        $currentUserID = $currentUser->getId();
-
-        // Buscar la lista "serie_viendo" del usuario conectado: 
-        $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
-
-        // Obtener el ID de dicha lista ("series_viendo"):
-        $currentListaID = $listaUsuario->getId(); 
-
-        // Obtener un array con todas las series de la lista con el ID anterior (SerieLista):
-        $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
-
-        $array_id_series = [];
-
-        foreach ($series_lista as $id_serie) {
-            $array_id_series[] = $id_serie['serie_id'];
-        }
-
-        $array_series = [];
-
-        foreach ($array_id_series as $id_serie) {
-            $array_series[] = $serieRepository->find($id_serie);
-        }
-
-        return $this->render('page/perfil/perfil.html.twig', [
-            'array_series' => $array_series
-        ]);
-    }
-
     private function statsPerfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository) {
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
@@ -210,6 +174,47 @@ class SerieController extends AbstractController
     }
 
     /**
+     * Método que mostrará la página de perfil del usuario actual. Por defecto mostrará el listado de las series que está viendo.
+     */
+    #[Route('/perfil', name: 'perfil')]
+    public function perfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieListaRepository $serieListaRepository, SerieRepository $serieRepository) {
+        // Obtener el ID del usuario conectado:
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        $nombre_usuario = $currentUser->getUsername(); //nombre de usuario
+        $array_stats = $this->statsPerfil($usuarioRepository, $listaRepository, $serieRepository, $serieListaRepository); //stats de usuario
+
+        // Buscar la lista "serie_viendo" del usuario conectado: 
+        $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
+
+        // Obtener el ID de dicha lista ("series_viendo"):
+        $currentListaID = $listaUsuario->getId(); 
+
+        // Obtener un array con todas las series de la lista con el ID anterior (SerieLista):
+        $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+        $array_id_series = [];
+
+        foreach ($series_lista as $id_serie) {
+            $array_id_series[] = $id_serie['serie_id'];
+        }
+
+        $array_series = [];
+
+        foreach ($array_id_series as $id_serie) {
+            $array_series[] = $serieRepository->find($id_serie);
+        }
+
+        return $this->render('page/perfil/perfil.html.twig', [
+            'array_series' => $array_series,
+            'nombre_usuario' => $nombre_usuario,
+            'stats' => $array_stats,
+        ]);
+    }
+
+    /**
      * Método que permitirá navegar entre las distintas listas del usuario (que aparecen en el perfil).
      * Dependiendo de la lista seleccionada por el usuario se mostrarán unas series u otras.
      * tipo_lista: tipo de lista a mostrar (series_viendo | series_por_ver | series_vistas | series_favoritas)
@@ -222,10 +227,9 @@ class SerieController extends AbstractController
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
         $currentUserID = $currentUser->getId();
 
-        $nombre_usuario = $currentUser->getUsername(); //nombre del usuario
+        $nombre_usuario = $currentUser->getUsername(); //nombre de usuario
         $array_series = [];
-        
-        $array_stats = $this->statsPerfil($usuarioRepository, $listaRepository, $serieRepository, $serieListaRepository);
+        $array_stats = $this->statsPerfil($usuarioRepository, $listaRepository, $serieRepository, $serieListaRepository); // stats de usuario
 
         // Dependiendo de la lista activa se pasará la una clase para subrayar el título de dicha lista:
         $activo_viendo = "";

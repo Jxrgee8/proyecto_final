@@ -16,13 +16,21 @@ class CapituloCrudController extends AbstractCrudController
         return Capitulo::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $capitulo = new Capitulo();
+        $capitulo->setFechaCreacion(new \DateTime());
+
+        return $capitulo;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             NumberField::new('numero_cap')->setLabel('Número de Capítulo'),
             AssociationField::new('Temporada'),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }

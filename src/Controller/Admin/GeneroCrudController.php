@@ -15,12 +15,20 @@ class GeneroCrudController extends AbstractCrudController
         return Genero::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $genero = new Genero();
+        $genero->setFechaCreacion(new \DateTime());
+
+        return $genero;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nombre'),
-            DateField::new('fecha_creacion')
+            DateField::new('fecha_creacion')->hideOnForm()
         ];
     }
 }
