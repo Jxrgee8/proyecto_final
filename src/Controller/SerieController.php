@@ -34,6 +34,8 @@ class SerieController extends AbstractController
 
         $array_temporada = $serie->getTemporadas();
 
+        $capitulos = "";
+
         foreach ($array_temporada as $temporada) {
             $capitulos = count($temporada->getCapitulo());
         }
