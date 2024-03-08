@@ -146,6 +146,11 @@
     width: 26.5vh;
   }
   
+  .flex-container-series.viendo-container img {
+    border: 1px solid var(--viendo);
+    border-radius: 4px;
+  }
+
   .flex-container-series.visto-container img {
     border: 1px solid var(--visto);
     border-radius: 4px;
@@ -157,7 +162,8 @@
   }
   
   .flex-container-series.favorito-container img {
-    border: 1px solid var(--favorito);
+    background: var(--favorito);
+    border: 1px solid transparent;
     border-radius: 4px;
   }
   

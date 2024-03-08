@@ -10,9 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 class SerieLista
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?string $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'serieLista')]
     private ?Serie $serie = null;
@@ -23,7 +22,14 @@ class SerieLista
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fecha_agregado = null;
 
-    public function getId(): ?int
+    public function setId(?string $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getId(): ?string
     {
         return $this->id;
     }

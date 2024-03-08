@@ -46,8 +46,11 @@
     width: 35vh;
     border: 2px solid #fff;
     border-top: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+  }
+
+  .flex-container-serie .estado-serie a {
+    font-size: 16px;
+
   }
   
   .flex-container-serie .estado-serie i {
@@ -70,6 +73,32 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .flex-container .empezar-serie {
+    display: flex;
+    justify-content: space-around;
+    padding: 3vh;
+    background-color: #6b6464;
+    width: 35vh;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  .flex-container .empezar-serie a {
+    text-decoration: none;
+    text-align: center;
+    background: linear-gradient(0.25turn, var(--viendo), #fff);
+    color: #000;
+    padding: 1.1vh;
+    width: 20vh;
+    height: 5vh;
+    font-size: 16px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
   .flex-container-serie .info-basica {

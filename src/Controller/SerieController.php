@@ -260,6 +260,7 @@ class SerieController extends AbstractController
             }
 
             $activo_viendo = "activo_s_viendo";
+            $tipo_lista = "viendo-container";
         }
 
         // Obtener SERIES POR VER:
@@ -285,6 +286,7 @@ class SerieController extends AbstractController
             }
             
             $activo_por_ver = "activo_s_por_ver";
+            $tipo_lista = "por-ver-container";
         }
 
         // Obtener SERIES VISTAS:
@@ -310,6 +312,7 @@ class SerieController extends AbstractController
             }
 
             $activo_vistas = "activo_s_vistas";
+            $tipo_lista = "visto-container";
         }
 
         // Obtener SERIES FAVORITAS:
@@ -335,6 +338,7 @@ class SerieController extends AbstractController
             }        
 
             $activo_favoritas = "activo_s_favoritas";
+            $tipo_lista = "favorito-container";
         }
 
         return $this->render('page/perfil/perfilListas.html.twig', [
@@ -345,6 +349,7 @@ class SerieController extends AbstractController
             'activo_s_por_ver' => $activo_por_ver,
             'activo_s_vistas' => $activo_vistas,
             'activo_s_favoritas' => $activo_favoritas,
+            'tipo_lista' => $tipo_lista
         ]);
     }
 
@@ -355,14 +360,29 @@ class SerieController extends AbstractController
      * Método que muestra la página de lista de seguimiento, donde se encuentran todas las series de la lista series_por_ver
      */
     #[Route('/seguimiento', name: 'seguimiento')]
-    public function seguimiento(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository) {
+    public function seguimiento(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository) {
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
         $currentUserID = $currentUser->getId();
 
-        $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
+        $listaUsuario = $listaRepository->listaSeriesFavoitas($currentUserID);
 
-        $array_series = $listaUsuario->getSerieListas();
+        // Obtener el ID de dicha lista ("series_favoritas"):
+        $currentListaID = $listaUsuario->getId(); 
+
+        // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
+        $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
+
+        // Se guardan los ids de las series obtenidas en un array seleccionando esa clave-valor (array['serie_id']):
+        $array_id_series = [];
+        foreach ($series_lista as $id_serie) {
+            $array_id_series[] = $id_serie['serie_id'];
+        }
+
+        // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+        foreach ($array_id_series as $id_serie) {
+            $array_series[] = $serieRepository->find($id_serie);
+        }    
 
         return $this->render('page/seguimiento/seguimiento.html.twig', [
             'array_series' => $array_series

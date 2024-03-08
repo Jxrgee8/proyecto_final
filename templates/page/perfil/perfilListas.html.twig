@@ -125,7 +125,7 @@
             <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_favoritas'}) }}"><p class="titulo-lista {{ activo_s_favoritas }}">Favoritos</p></a>
           </div>
           <!-- TODO: Editar lista-container según el estado de la serie: -->
-          <div class="flex-container-series visto-container">
+          <div class="flex-container-series {{ tipo_lista }}">
           
             <!-- TODO: where lista = series_viendo -->
             {% for serie in array_series %}
