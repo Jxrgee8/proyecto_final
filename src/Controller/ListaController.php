@@ -191,4 +191,72 @@ class ListaController extends AbstractController
             
         return $this->redirectToRoute('perfil');
     }
+
+    /** ############ MÉTODOS PÁGINA EXTERNAS: ############ */
+
+    // Método para empezar serie desde "Seguimiento":
+    #[Route('/addListaViendoS/id={id}', name: 'add_lista_viendo_s')]
+    public function empezarSerieSeguimiento(EntityManagerInterface $entityManager, UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository, int $id): Response
+    {
+        // Obtener usuario:
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        // Obtener lista del usuario a manejar (series_viendo):
+        $listaUsuario = $listaRepository->listaSeriesViendo($currentUserID);
+
+        // Obtener serie seleccionada:
+        $serie = $serieRepository->find($id);
+
+        // Se crea el id de SerieLista y se busca si ya existe:
+        $id = "S".$serie->getId()."L".$listaUsuario->getId();
+        $serieListaID = $serieListaRepository->find($id);
+
+        // Si no existe se crea la relación (Se añade la serie a la lista):
+        if (null === $serieListaID) {
+            $serieLista = new SerieLista();
+            $serieLista->setSerie($serie);
+            $serieLista->setLista($listaUsuario);
+            $serieLista->setFechaAgregado(new \DateTime());
+            $serieLista->setId($id);
+            $entityManager->persist($serieLista);
+            $entityManager->flush();
+        }
+            
+        return $this->redirectToRoute('seguimiento');
+    }
+
+    // Método para añadir seguimiento desde "Destacados":
+    #[Route('/addListaPorVerD/id={id}', name: 'add_lista_por_ver_d')]
+    public function addSeguimientoDestacados(EntityManagerInterface $entityManager, UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository, int $id): Response
+    {
+        // Obtener usuario:
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        // Obtener lista del usuario a manejar (series_por_ver):
+        $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
+
+        // Obtener serie seleccionada:
+        $serie = $serieRepository->find($id);
+
+        // Se crea el id de SerieLista y se busca si ya existe:
+        $id = "S".$serie->getId()."L".$listaUsuario->getId();
+        $serieListaID = $serieListaRepository->find($id);
+
+        // Si no existe se crea la relación (Se añade la serie a la lista):
+        if (null === $serieListaID) {
+            $serieLista = new SerieLista();
+            $serieLista->setSerie($serie);
+            $serieLista->setLista($listaUsuario);
+            $serieLista->setFechaAgregado(new \DateTime());
+            $serieLista->setId($id);
+            $entityManager->persist($serieLista);
+            $entityManager->flush();
+        }
+            
+        return $this->redirectToRoute('destacados');
+    }
 }

@@ -49,7 +49,7 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Destacados</a>
+              <a class="nav-link" href="{{ path('destacados') }}">Destacados</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="">Buscar</a>
@@ -83,10 +83,9 @@
 
     <!-- SECCIÓN VIENDO: -->
     <section class="contenedor-pagina">
-      <h1 class="titulo-pagina">Empezar a ver...</h1>
+      <h1 class="titulo-pagina">Lista de Seguimiento</h1>
       <div class="flex-container por-ver-container">
       
-        <!-- TODO: where lista = series_por_ver -->
         {% for serie in array_series %}
         <div>
           <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
@@ -96,6 +95,11 @@
                 alt="..."
             />
           </a>
+          <a href="{{ path('add_lista_viendo_s', {'id': serie.id}) }}">
+          <div class="empezar-serie">
+            <p>Empezar Serie</p>    
+          </div>
+          </a>   
         </div>
         {% endfor %}
 

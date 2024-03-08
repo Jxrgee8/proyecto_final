@@ -388,4 +388,18 @@ class SerieController extends AbstractController
             'array_series' => $array_series
         ]);
     }
+
+    /** ######### MÉTODOS DE DESTACADOS: ######### */
+
+    /**
+     * Método que muestra la página de lista de seguimiento, donde se encuentran todas las series de la lista series_por_ver
+     */
+    #[Route('/destacados', name: 'destacados')]
+    public function destacados(SerieRepository $serieRepository) {
+        $array_series = $serieRepository->findAll();  
+
+        return $this->render('page/destacados/destacados.html.twig', [
+            'array_series' => $array_series
+        ]);
+    }
 }
