@@ -57,7 +57,7 @@ class ListaRepository extends ServiceEntityRepository
         ;
     }
 
-    public function listaSeriesFavoitas($usuario): ?Lista
+    public function listaSeriesFavoritas($usuario): ?Lista
     {
         return $this->createQueryBuilder('l')
             ->andWhere('l.usuario = :usuario')

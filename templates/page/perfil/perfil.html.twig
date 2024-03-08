@@ -125,20 +125,24 @@
             <a href="{{ path('perfil_browse_lista', {'tipo_lista': 'series_favoritas', 'activo': 'activo_s_favoritas'}) }}"><p class="titulo-lista">Favoritos</p></a>
           </div>
           <!-- TODO: Editar lista-container según el estado de la serie: -->
-          <div class="flex-container-series visto-container">
+          <div class="flex-container-series viendo-container">
           
             <!-- TODO: where lista = series_viendo -->
             {% for serie in array_series %}
-            <div>
-              <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
-                <img
-                    src="{{ asset(serie.posterSrc) }}"
-                    class="card-img-top"
-                    alt="..."
-                />
-              </a>
-              {#  <a href="{{ path('add_lista_viendo', {'id': serie.id}) }}">Empezar serie</a> #}
-            </div>
+              <div>
+                <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
+                  <img
+                      src="{{ asset(serie.posterSrc) }}"
+                      class="card-img-top"
+                      alt="..."
+                  />
+                </a>
+                <a href="{{ path('remove_serie_lista', {'id': serie.id, 'tipo_lista': 'viendo-container'}) }}">
+                  <div class="contenedor-eliminar">
+                    <i class="bi bi-trash3 eliminar-serie"></i>
+                  </div>
+                </a>    
+              </div>
             {% endfor %}
 
         </div>

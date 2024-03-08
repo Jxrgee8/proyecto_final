@@ -111,7 +111,6 @@
     flex-direction: row;
     justify-content: space-around;
     width: 100%;
-    margin-bottom: 6vh;
   }
   
   .flex-container-listas .contenedor-listas a {
@@ -144,6 +143,7 @@
   .flex-container-series div {
     margin: 14px;
     width: 26.5vh;
+    margin-top: 4.5vh;
   }
   
   .flex-container-series.viendo-container img {
@@ -176,6 +176,26 @@
     cursor: pointer;
     width: 100%;
   }
+
+  .flex-container-series div .contenedor-eliminar {
+    position: absolute;
+    width: 4vh;
+    height: 4vh;
+    background-color: var(--eliminar);
+    border: 1px solid #fff;
+    border-radius: 4px;    
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 0;
+  }
+
+  .flex-container-series div .eliminar-serie {
+    position: relative;
+    top: 18%;
+    left: 29%;
+  }
+  
+
   
   @media screen and (max-width: 1024px) {
     section.section-perfil {

@@ -136,7 +136,7 @@ class SerieController extends AbstractController
         // Ids de listas a buscar:
         $lista_vistas = $listaRepository->listaSeriesVistas($currentUserID);
         $lista_por_ver = $listaRepository->listaSeriesPorVer($currentUserID);
-        $lista_favoritas = $listaRepository->listaSeriesFavoitas($currentUserID);
+        $lista_favoritas = $listaRepository->listaSeriesFavoritas($currentUserID);
 
         // Array Series en cada Lista
         $series_vistas = $serieListaRepository->getSerieIdFromLista($lista_vistas->getId());;
@@ -318,7 +318,7 @@ class SerieController extends AbstractController
         // Obtener SERIES FAVORITAS:
         if ($tipo_lista == "series_favoritas") {
             // Se selecciona el tipo de lista a buscar ("series_favoritas"):
-            $listaUsuario = $listaRepository->listaSeriesFavoitas($currentUserID);
+            $listaUsuario = $listaRepository->listaSeriesFavoritas($currentUserID);
 
             // Obtener el ID de dicha lista ("series_favoritas"):
             $currentListaID = $listaUsuario->getId(); 
@@ -365,7 +365,7 @@ class SerieController extends AbstractController
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
         $currentUserID = $currentUser->getId();
 
-        $listaUsuario = $listaRepository->listaSeriesFavoitas($currentUserID);
+        $listaUsuario = $listaRepository->listaSeriesPorVer($currentUserID);
 
         // Obtener el ID de dicha lista ("series_favoritas"):
         $currentListaID = $listaUsuario->getId(); 

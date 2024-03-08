@@ -129,15 +129,20 @@
           
             <!-- TODO: where lista = series_viendo -->
             {% for serie in array_series %}
-            <div>
-              <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
-                <img
-                    src="{{ asset(serie.posterSrc) }}"
-                    class="card-img-top"
-                    alt="..."
-                />
-              </a>
-            </div>
+              <div>
+                <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
+                  <img
+                      src="{{ asset(serie.posterSrc) }}"
+                      class="card-img-top"
+                      alt="..."
+                  />
+                </a>
+                <a href="{{ path('remove_serie_lista', {'id': serie.id, 'tipo_lista': tipo_lista}) }}">
+                <div class="contenedor-eliminar">
+                  <i class="bi bi-trash3 eliminar-serie"></i>
+                </div>
+                </a>
+              </div>
             {% endfor %}
 
         </div>
