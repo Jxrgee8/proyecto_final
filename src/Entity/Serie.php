@@ -25,7 +25,7 @@ class Serie
     #[ORM\Column]
     private ?int $fecha_lanzamiento = null;
 
-    #[ORM\Column(length: 500, nullable: true)]
+    #[ORM\Column(length: 1800, nullable: true)]
     private ?string $sinopsis = null;
 
     #[ORM\Column(length: 255)]
