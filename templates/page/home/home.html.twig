@@ -87,7 +87,7 @@
       <div class="flex-container viendo-container">
 
         <!-- TODO: where lista = series_viendo -->
-        {% for serie in array_series %}
+        {% for serie in array_series_viendo %}
         <div>
           <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
             <img
@@ -105,7 +105,7 @@
       <div class="flex-container por-ver-container">
 
         <!-- TODO: where lista = series_por_ver -->
-        {% for serie in array_series %}
+        {% for serie in array_series_por_ver|slice(0, 6) %}
         <div>
           <a href="{{ path('mostrar_serie_id', {'id': serie.id}) }}">
             <img
