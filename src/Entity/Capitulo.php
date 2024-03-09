@@ -25,8 +25,8 @@ class Capitulo
     private ?\DateTimeInterface $fecha_creacion = null;
 
     //? null = "episodio + 1"
-    //? false = "episodio + 1" && "temporada + 1"
-    //? true = "delete->series_viendo($serie)" && "add->series_vistas($serie)"
+    //? 0 = "episodio + 1" && "temporada + 1"
+    //? 1 = "delete->series_viendo($serie)" && "add->series_vistas($serie)"
     #[ORM\Column(nullable: true)]
     private ?bool $es_ultimo = null;
 

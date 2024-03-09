@@ -28,6 +28,11 @@ class ListaController extends AbstractController
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
 
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
         $serieListaID = $serieListaRepository->find($id);
@@ -59,6 +64,11 @@ class ListaController extends AbstractController
 
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
+
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
 
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
@@ -92,6 +102,11 @@ class ListaController extends AbstractController
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
 
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
         $serieListaID = $serieListaRepository->find($id);
@@ -123,6 +138,11 @@ class ListaController extends AbstractController
 
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
+
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
 
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
@@ -159,6 +179,10 @@ class ListaController extends AbstractController
         // ID de la lista a eliminar
         $lista = 0;
 
+        if (!$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
         // Obtener la lista de usuario donde se encuentra la serie a eliminar:
         if ($tipo_lista == "viendo-container") {
             $lista = $listaRepository->listaSeriesViendo($currentUserID);
@@ -169,9 +193,7 @@ class ListaController extends AbstractController
         } else if ($tipo_lista == "favorito-container") {
             $lista = $listaRepository->listaSeriesFavoritas($currentUserID);
         } else {
-            throw $this->createNotFoundException(
-                '404 Not found' // TODO: redirigir a página de error
-            );
+            return $this->render('security/errors/404-error.html.twig');
         }
 
         // ID de la SerieLista a eliminar:
@@ -181,9 +203,7 @@ class ListaController extends AbstractController
         $serieLista = $serieListaRepository->find($idSerieLista);
 
         if (!$serieLista) {
-            throw $this->createNotFoundException(
-                '404 Not found' // TODO: redirigir a página de error
-            );
+            return $this->render('security/errors/404-error.html.twig');
         } 
 
         $entityManager->remove($serieLista);
@@ -208,6 +228,11 @@ class ListaController extends AbstractController
 
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
+
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
 
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
@@ -241,6 +266,11 @@ class ListaController extends AbstractController
 
         // Obtener serie seleccionada:
         $serie = $serieRepository->find($id);
+
+        // Devolver error 404 si no se encuentra la serie o la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuario || !$serie) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
 
         // Se crea el id de SerieLista y se busca si ya existe:
         $id = "S".$serie->getId()."L".$listaUsuario->getId();

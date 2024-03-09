@@ -24,6 +24,11 @@ class HomeController extends AbstractController
         $listaUsuarioViendo = $listaRepository->listaSeriesViendo($currentUserID);
         $listaUsuarioPorVer = $listaRepository->listaSeriesPorVer($currentUserID);
 
+        // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+        if (!$listaUsuarioViendo || !$listaUsuarioPorVer) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
         // Obtener ID de las listas:
         $currentListaViendoID = $listaUsuarioViendo->getId();
         $currentListaPorVerID = $listaUsuarioPorVer->getId(); 

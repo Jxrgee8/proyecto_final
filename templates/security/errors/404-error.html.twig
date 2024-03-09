@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Error 404{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <h2 style="color:red">Se ha producido un error :/</h2>
+        <h3>404 Not Found</h3>
+        <div class="mb-3">
+            No se ha encontrado la URL solicitada. <a href="{{ path('home') }}">Volver a Inicio</a>&nbsp;|&nbsp;<a href="{{ path('app_logout') }}">Cerrar sesión</a>
+        </div>
+    {% endif %}
+{% endblock %}

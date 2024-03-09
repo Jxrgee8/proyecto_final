@@ -15,7 +15,9 @@ use Symfony\Component\String\UnicodeString;
 
 class SerieController extends AbstractController
 {
-    /** ######### MÉTODOS DE SERIES: ######### */
+    /** ###################################### 
+     *  ######### MÉTODOS DE SERIES: #########
+     *  ###################################### */
 
     /**
      * Método que buscará una serie a través de su id y devolverá la página de dicha serie.
@@ -27,9 +29,7 @@ class SerieController extends AbstractController
         $serie = $serieRepository->find($id);
 
         if (!$serie) {
-            throw $this->createNotFoundException(
-                '404 Not found' // TODO: redirigir a página de error
-            );
+            return $this->render('security/errors/404-error.html.twig');
         }
 
         $array_temporada = $serie->getTemporadas();
@@ -62,9 +62,7 @@ class SerieController extends AbstractController
         $array_series = $serieRepository->findAll();
 
         if (!$array_series) {
-            throw $this->createNotFoundException(
-                '404 Not found' // TODO: redirigir a página de error
-            );
+            return $this->render('security/errors/404-error.html.twig');
         }
 
         return $this->render('serie/views/showAllSeries.html.twig', [
@@ -86,9 +84,7 @@ class SerieController extends AbstractController
         $genero_string = $genero->getNombre();
         
         if (!$genero) {
-            throw $this->createNotFoundException((
-                '404 Not Found' // TODO: redirigir a página de error
-            ));
+            return $this->render('security/errors/404-error.html.twig');
         }
 
         $array_series = $genero->getSerie();
@@ -113,9 +109,7 @@ class SerieController extends AbstractController
         $streaming_string = $streaming->getNombre();
         
         if (!$streaming) {
-            throw $this->createNotFoundException((
-                '404 Not Found' // TODO: redirigir a página de error
-            ));
+            return $this->render('security/errors/404-error.html.twig');
         }
 
         $array_series = $streaming->getSerie();
@@ -127,7 +121,14 @@ class SerieController extends AbstractController
     }
 
 
-    /** ######### MÉTODOS DE PERFIL: ######### */
+
+    /** ###################################### 
+     *  ######### MÉTODOS DE PERFIL: #########
+     *  ###################################### */
+
+    /**
+     * Método para recoger las estadísticas del usuario conectado para mostrarlas en su perfil
+     */
     private function statsPerfil(UsuarioRepository $usuarioRepository, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository) {
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
@@ -192,6 +193,11 @@ class SerieController extends AbstractController
         // Obtener el ID de dicha lista ("series_viendo"):
         $currentListaID = $listaUsuario->getId(); 
 
+        // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+        if (!$currentListaID) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
         // Obtener un array con todas las series de la lista con el ID anterior (SerieLista):
         $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
 
@@ -245,6 +251,11 @@ class SerieController extends AbstractController
             // Obtener el ID de dicha lista ("series_viendo"):
             $currentListaID = $listaUsuario->getId(); 
 
+            // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+            if (!$currentListaID) {
+                return $this->render('security/errors/404-error.html.twig');
+            }
+
             // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
             $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
 
@@ -270,6 +281,11 @@ class SerieController extends AbstractController
 
             // Obtener el ID de dicha lista ("series_por_ver"):
             $currentListaID = $listaUsuario->getId(); 
+
+            // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+            if (!$currentListaID) {
+                return $this->render('security/errors/404-error.html.twig');
+            }
 
             // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
             $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
@@ -297,6 +313,11 @@ class SerieController extends AbstractController
             // Obtener el ID de dicha lista ("series_vistas"):
             $currentListaID = $listaUsuario->getId(); 
 
+            // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+            if (!$currentListaID) {
+                return $this->render('security/errors/404-error.html.twig');
+            }
+
             // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
             $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
 
@@ -322,6 +343,11 @@ class SerieController extends AbstractController
 
             // Obtener el ID de dicha lista ("series_favoritas"):
             $currentListaID = $listaUsuario->getId(); 
+
+            // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+            if (!$currentListaID) {
+                return $this->render('security/errors/404-error.html.twig');
+            }
 
             // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
             $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
@@ -354,7 +380,10 @@ class SerieController extends AbstractController
     }
 
 
-    /** ######### MÉTODOS DE LISTA DE SEGUIMIENTO: ######### */
+
+    /** #################################################### 
+     *  ######### MÉTODOS DE LISTA DE SEGUIMIENTO: #########
+     *  #################################################### */
 
     /**
      * Método que muestra la página de lista de seguimiento, donde se encuentran todas las series de la lista series_por_ver
@@ -369,6 +398,11 @@ class SerieController extends AbstractController
 
         // Obtener el ID de dicha lista ("series_favoritas"):
         $currentListaID = $listaUsuario->getId(); 
+
+        // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+        if (!$currentListaID) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
 
         // Obtener un array con todas las series de la lista con el ID obtenido antes (SerieLista):
         $series_lista = $serieListaRepository->getSerieIdFromLista($currentListaID);
@@ -389,7 +423,11 @@ class SerieController extends AbstractController
         ]);
     }
 
-    /** ######### MÉTODOS DE DESTACADOS: ######### */
+
+
+    /** ######################################### 
+    *  ######### MÉTODOS DE DESTACADOS: #########
+    *  ########################################## */
 
     /**
      * Método que muestra la página de lista de seguimiento, donde se encuentran todas las series de la lista series_por_ver
