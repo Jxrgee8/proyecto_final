@@ -23,15 +23,14 @@ class Temporada
     #[ORM\JoinColumn(nullable: false)]
     private ?Serie $Serie = null;
 
-    #[ORM\OneToMany(mappedBy: 'Temporada', targetEntity: Capitulo::class)]
-    private Collection $capitulo;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fecha_creacion = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $capitulos = null;
+
     public function __construct()
     {
-        $this->capitulo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,36 +62,6 @@ class Temporada
         return $this;
     }
 
-    /**
-     * @return Collection<int, Capitulos>
-     */
-    public function getCapitulo(): Collection
-    {
-        return $this->capitulo;
-    }
-
-    public function addCapitulo(Capitulo $capitulo): static
-    {
-        if (!$this->capitulo->contains($capitulo)) {
-            $this->capitulo->add($capitulo);
-            $capitulo->setTemporada($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCapitulo(Capitulo $capitulo): static
-    {
-        if ($this->capitulo->removeElement($capitulo)) {
-            // set the owning side to null (unless already changed)
-            if ($capitulo->getTemporada() === $this) {
-                $capitulo->setTemporada(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getFechaCreacion(): ?\DateTimeInterface
     {
         return $this->fecha_creacion;
@@ -113,5 +82,17 @@ class Temporada
     public function __toString(): string
     {
         return $this->getTemporadaSerie();
+    }
+
+    public function getCapitulos(): ?int
+    {
+        return $this->capitulos;
+    }
+
+    public function setCapitulos(?int $capitulos): static
+    {
+        $this->capitulos = $capitulos;
+
+        return $this;
     }
 }

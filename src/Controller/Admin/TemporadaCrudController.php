@@ -28,8 +28,9 @@ class TemporadaCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            NumberField::new('numero_temp')->setLabel('Número de Temporada'),
             AssociationField::new('Serie'),
+            NumberField::new('numero_temp')->setLabel('Número de Temporada'),
+            NumberField::new('capitulos'),
             DateField::new('fecha_creacion')->hideOnForm()
         ];
     }

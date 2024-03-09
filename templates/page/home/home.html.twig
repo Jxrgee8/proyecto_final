@@ -96,6 +96,11 @@
                 alt="..."
             />
           </a>
+          {# <a href="{{ path('add_lista_viendo_s', {'id': serie.id}) }}"> #}
+          <div class="info-capitulo">
+            <p>S1 ~~ Cap. 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-plus-square"></i></p>
+          </div>
+          {# </a> #}  
         </div>
         {% endfor %}
 
@@ -114,6 +119,11 @@
                 alt="..."
             />
           </a>
+          <a href="{{ path('add_lista_viendo_h', {'id': serie.id}) }}">
+          <div class="empezar-serie">
+            <p>Empezar Serie</p>    
+          </div>
+          </a>  
         </div>
         {% endfor %}
 

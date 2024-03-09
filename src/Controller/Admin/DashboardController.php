@@ -53,7 +53,6 @@ class DashboardController extends AbstractDashboardController
        yield MenuItem::section('Series');
        yield MenuItem::linkToCrud('Serie', 'fa fa-tv', Serie::class);
        yield MenuItem::linkToCrud('Temporada', 'fa fa-th-list', Temporada::class);
-       yield MenuItem::linkToCrud('Capitulo', 'fa fa-eye', Capitulo::class);
        yield MenuItem::section('Información de Serie');
        yield MenuItem::linkToCrud('Género', 'fa fa-tags', Genero::class);
        yield MenuItem::linkToCrud('Streaming', 'fa fa-play-circle-o', Streaming::class);

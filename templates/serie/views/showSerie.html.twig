@@ -143,10 +143,10 @@
         <div class="flex-container-temporadas">
           <p class="titulo-temporadas">Temporadas</p>
           <div class="lista-temporadas">
-            {% for temporada in temporada_serie %}
+            {% for temporada in array_temporadas %}
             <div class="temporada">
               <p>Temporada {{ temporada.numeroTemp }}</p>
-              <p>{{ capitulos }} Capítulo/s</p>
+              <p>{{ temporada.capitulos }} Capítulo/s</p>
             </div>
             {% endfor %}
           </div>
