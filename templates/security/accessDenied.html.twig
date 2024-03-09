@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceso Denegado{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <h3>Acceso Denegado!</h3>
+        <div class="mb-3">
+            El usuario `{{ app.user.userIdentifier }}` no tiene acceso a esta página. Si quieres acceder mediante otro usuario cierra sesión antes: <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
+        </div>
+    {% endif %}
+{% endblock %}

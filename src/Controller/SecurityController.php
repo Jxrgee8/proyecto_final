@@ -31,11 +31,20 @@ class SecurityController extends AbstractController
          */
     }
 
-    
-
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    #[Route(path: '/accessDenied', name: 'access_denied')]
+    public function accessDenied(AuthenticationUtils $authenticationUtils): Response
+    {
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/accessDenied.html.twig', ['last_username' => $lastUsername]);
+
+    }
+
 }

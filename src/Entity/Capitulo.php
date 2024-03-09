@@ -24,6 +24,12 @@ class Capitulo
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $fecha_creacion = null;
 
+    //? null = "episodio + 1"
+    //? false = "episodio + 1" && "temporada + 1"
+    //? true = "delete->series_viendo($serie)" && "add->series_vistas($serie)"
+    #[ORM\Column(nullable: true)]
+    private ?bool $es_ultimo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +67,18 @@ class Capitulo
     public function setFechaCreacion(\DateTimeInterface $fecha_creacion): static
     {
         $this->fecha_creacion = $fecha_creacion;
+
+        return $this;
+    }
+
+    public function isEsUltimo(): ?bool
+    {
+        return $this->es_ultimo;
+    }
+
+    public function setEsUltimo(?bool $es_ultimo): static
+    {
+        $this->es_ultimo = $es_ultimo;
 
         return $this;
     }
