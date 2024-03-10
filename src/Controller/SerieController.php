@@ -263,7 +263,7 @@ class SerieController extends AbstractController
      * Se usará la misma funcionalidad que en el método /perfil
      */
     #[Route('/perfil/{tipo_lista}', name: 'perfil_browse_lista')]
-    public function seriesPorVer(UsuarioRepository $usuarioRepository, string $tipo_lista, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository): Response
+    public function perfilLista(UsuarioRepository $usuarioRepository, string $tipo_lista, ListaRepository $listaRepository, SerieRepository $serieRepository, SerieListaRepository $serieListaRepository): Response
     {
         $user = $this->getUser();
         $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
