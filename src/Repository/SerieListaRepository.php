@@ -36,4 +36,20 @@ class SerieListaRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function buscarSerieExisteEnLista($lista_id, $serie_id): ?array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM serie_lista sl
+            WHERE sl.lista_id = :lista_id
+            AND sl.serie_id = :serie_id
+            ';
+
+        $resultSet = $conn->executeQuery($sql, ['lista_id' => $lista_id, 'serie_id' => $serie_id]);
+        
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
 }

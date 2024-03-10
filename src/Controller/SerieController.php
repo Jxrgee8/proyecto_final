@@ -24,8 +24,48 @@ class SerieController extends AbstractController
      * id: id de la serie
      */
     #[Route('/mostrarSerie/id={id}', name: 'mostrar_serie_id')]
-    public function mostrarSerie(SerieRepository $serieRepository, int $id): Response
+    public function mostrarSerie(UsuarioRepository $usuarioRepository, SerieRepository $serieRepository, ListaRepository $listaRepository, SerieListaRepository $serieListaRepository, int $id): Response
     {
+        $user = $this->getUser();
+        $currentUser = $usuarioRepository->getUserID($user->getUserIdentifier());
+        $currentUserID = $currentUser->getId();
+
+        $listaUsuarioVisto = $listaRepository->listaSeriesVistas($currentUserID);
+        $listaUsuarioPorVer = $listaRepository->listaSeriesPorVer($currentUserID);
+        $listaUsuarioFavorito = $listaRepository->listaSeriesFavoritas($currentUserID);
+
+        // Obtener el ID de dicha lista ("series_viendo"):
+        $currentListaVistoID = $listaUsuarioVisto->getId();
+        $currentListaPorVer = $listaUsuarioPorVer->getId();
+        $currentListaFavoritoID = $listaUsuarioFavorito->getId();
+
+        // Devolver error 404 si no se encuentra la lista (Usuarios admin, manager o sin logear)
+        if (!$currentListaVistoID || !$currentListaPorVer || !$currentListaFavoritoID) {
+            return $this->render('security/errors/404-error.html.twig');
+        }
+
+        // Buscar si la serie (id_serie) existe en una lista (id_lista) para cambiar el icono de estado en la vista:
+        $serie_vista = $serieListaRepository->buscarSerieExisteEnLista($currentListaVistoID, $id);
+        $serie_por_ver = $serieListaRepository->buscarSerieExisteEnLista($currentListaPorVer, $id);
+        $serie_favorita = $serieListaRepository->buscarSerieExisteEnLista($currentListaFavoritoID, $id);
+
+
+        $icono_vista = 'bi-eye';
+        $icono_por_ver = 'bi-bookmark';
+        $icono_favorita = 'bi-heart';
+        
+        if ($serie_vista) {
+            $icono_vista = 'bi-eye-fill';
+        }
+
+        if ($serie_por_ver) {
+            $icono_por_ver = 'bi-bookmark-fill';
+        }
+
+        if ($serie_favorita) {
+            $icono_favorita = 'bi-heart-fill';
+        }
+
         $serie = $serieRepository->find($id);
 
         if (!$serie) {
@@ -43,6 +83,9 @@ class SerieController extends AbstractController
             'director_serie' => $serie->getDirector(),
             'sinopsis_serie' => $serie->getSinopsis(),
             'array_temporadas' => $array_temporadas,
+            'icono_vista' => $icono_vista,
+            'icono_por_ver' => $icono_por_ver,
+            'icono_favorita' => $icono_favorita,
         ]);
     }
 

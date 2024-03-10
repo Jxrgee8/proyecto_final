@@ -95,9 +95,9 @@
           <!-- TODO: Hacer excluyente estado visto y por ver: -->
           <!-- TODO: Cambiar icono según estado: -->
           <div class="estado-serie">
-            <a href="{{ path('add_lista_vista', {'id': id_serie}) }}"><i class="bi bi-eye icono-visto" id="icono-visto"></i></a>
-            <a href="{{ path('add_lista_por_ver', {'id': id_serie}) }}"><i class="bi bi-bookmark icono-por-ver" id="icono-por-ver"></i></a> 
-            <a href="{{ path('add_lista_favorita', {'id': id_serie}) }}"><i class="bi bi-heart icono-favorito" id="icono-favorito"></i></a>
+            <a href="{{ path('edit_lista_vista', {'id': id_serie}) }}"><i class="bi {{ icono_vista }} icono-visto" id="icono-visto"></i></a>
+            <a href="{{ path('edit_lista_por_ver', {'id': id_serie}) }}"><i class="bi {{ icono_por_ver }} icono-por-ver" id="icono-por-ver"></i></a> 
+            <a href="{{ path('edit_lista_favorita', {'id': id_serie}) }}"><i class="bi {{ icono_favorita }} icono-favorito" id="icono-favorito"></i></a>
           </div>
           <div class="empezar-serie">
             <a href="{{ path('add_lista_viendo', {'id': id_serie}) }}">Empezar Serie</a>
