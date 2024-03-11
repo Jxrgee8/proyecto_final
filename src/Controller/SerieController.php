@@ -449,6 +449,7 @@ class SerieController extends AbstractController
             $array_id_series[] = $id_serie['serie_id'];
         }
 
+        $array_series = [];
         // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
         foreach ($array_id_series as $id_serie) {
             $array_series[] = $serieRepository->find($id_serie);

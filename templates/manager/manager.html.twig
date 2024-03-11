@@ -31,6 +31,7 @@
         {% set dataGenero = {nombre: generoArray[0]|trim, num: generoArray[1]|trim} %}
         {% set data = data|merge([dataGenero]) %}
     {% endfor %}
+    <a href="{{ path('app_logout') }}">Cerrar Sesión</a>
 
     <div class="contenedor-grafico">
         <h2>Géneros más frecuentes:</h2><br>    

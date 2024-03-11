@@ -44,6 +44,12 @@ class ListaController extends AbstractController
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
         $serieListaID = $serieListaRepository->find($id);
 
+        // Se recogen los datos de la lista series_por_ver.
+        // Si la serie existe dentro de esta lista se eliminará, funcionando como un cambio de estado (por_ver --> viendo)
+        $listaUsuario_delete = $listaRepository->listaSeriesPorVer($currentUserID);
+        $id_delete = "S".$serie->getId()."L".$listaUsuario_delete->getId();
+        $serieListaID_delete = $serieListaRepository->find($id_delete);
+
         // Si no existe se crea la relación (Se añade la serie a la lista):
         if (null === $serieListaID) {
             $serieLista = new SerieLista();
@@ -52,6 +58,12 @@ class ListaController extends AbstractController
             $serieLista->setFechaAgregado(new \DateTime());
             $serieLista->setId($id);
             $entityManager->persist($serieLista);
+            $entityManager->flush();
+        }
+
+        if ($serieListaID_delete != null) {
+            $serieLista_delete = $entityManager->find(SerieLista::class, $serieListaID_delete);
+            $entityManager->remove($serieLista_delete);
             $entityManager->flush();
         }
             
@@ -288,7 +300,12 @@ class ListaController extends AbstractController
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
         $serieListaID = $serieListaRepository->find($id);
 
-        // Si no existe se crea la relación (Se añade la serie a la lista):
+        // Se recogen los datos de la lista series_por_ver.
+        $listaUsuario_delete = $listaRepository->listaSeriesPorVer($currentUserID);
+        $id_delete = "S".$serie->getId()."L".$listaUsuario_delete->getId();
+        $serieListaID_delete = $serieListaRepository->find($id_delete);
+
+        // Si no existe se crea la relación (Se añade la serie a la lista series_viendo) y se elimina de la lista previa (series_por_ver):
         if (null === $serieListaID) {
             $serieLista = new SerieLista();
             $serieLista->setSerie($serie);
@@ -296,6 +313,8 @@ class ListaController extends AbstractController
             $serieLista->setFechaAgregado(new \DateTime());
             $serieLista->setId($id);
             $entityManager->persist($serieLista);
+            $serieLista_delete = $entityManager->find(SerieLista::class, $serieListaID_delete);
+            $entityManager->remove($serieLista_delete);
             $entityManager->flush();
         }
             
@@ -328,7 +347,12 @@ class ListaController extends AbstractController
         $id = "S".$serie->getId()."L".$listaUsuario->getId();
         $serieListaID = $serieListaRepository->find($id);
 
-        // Si no existe se crea la relación (Se añade la serie a la lista):
+        // Se recogen los datos de la lista en la que estaba la serie (serie_por_ver) para eliminarla de esta:
+        $listaUsuario_delete = $listaRepository->listaSeriesPorVer($currentUserID);
+        $id_delete = "S".$serie->getId()."L".$listaUsuario_delete->getId();
+        $serieListaID_delete = $serieListaRepository->find($id_delete);
+
+        // Si no existe se crea la relación (Se añade la serie a la lista series_viendo) y se elimina de la lista previa (series_por_ver):
         if (null === $serieListaID) {
             $serieLista = new SerieLista();
             $serieLista->setSerie($serie);
@@ -336,6 +360,8 @@ class ListaController extends AbstractController
             $serieLista->setFechaAgregado(new \DateTime());
             $serieLista->setId($id);
             $entityManager->persist($serieLista);
+            $serieLista_delete = $entityManager->find(SerieLista::class, $serieListaID_delete);
+            $entityManager->remove($serieLista_delete);
             $entityManager->flush();
         }
             

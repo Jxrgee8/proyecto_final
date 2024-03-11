@@ -49,10 +49,12 @@ class HomeController extends AbstractController
         }
 
         // Se busca en "serieRepository" las series con los ids obtenidos antes y se guardan todas las series en un array de objetos (Serie[id, nombre, ...]):
+        $array_series_viendo = [];
         foreach ($array_id_series_viendo as $id_serie) {
             $array_series_viendo[] = $serieRepository->find($id_serie);
         }  
         
+        $array_series_por_ver = []; 
         foreach ($array_id_series_por_ver as $id_serie) {
             $array_series_por_ver[] = $serieRepository->find($id_serie);
         }    
